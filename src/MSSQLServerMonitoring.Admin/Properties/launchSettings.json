@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MSSQLServerMonitoring.Admin": {
+      "commandName": "Project",
+      "applicationUrl": "http://localhost:6010"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="3.1.0" />
+    <PackageReference Include="MassTransit" Version="6.0.1" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="6.0.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="6.0.1" />
+    <PackageReference Include="MediatR" Version="7.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.11.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="2.2.5" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MSSQLServerMonitoring.Domain\MSSQLServerMonitoring.Domain.csproj" />
+  </ItemGroup>
+</Project>

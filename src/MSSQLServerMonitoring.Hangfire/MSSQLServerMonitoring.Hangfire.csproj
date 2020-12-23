@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MSSQLServerMonitoring.Application\MSSQLServerMonitoring.Application.csproj" />
+    <ProjectReference Include="..\MSSQLServerMonitoring.Connector\MSSQLServerMonitoring.Connector.csproj" />
+  </ItemGroup>
+
+</Project>

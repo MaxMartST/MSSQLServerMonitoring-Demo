@@ -1,0 +1,1 @@
+powershell.exe -f generate-appsettings-and-nlog_config.ps1
