@@ -8,10 +8,10 @@ using System.Text;
 
 namespace MSSQLServerMonitoring.Connector.Services
 {
-    public class ServiceMSSQLServer : IServiceMSSQLServer
+    public class MSSQLServiceServer : IMSSQLServiceServer
     {
         private readonly string _baseUrl;
-        public ServiceMSSQLServer(ConfigureMSSQLServerConnectorComponent configuration)
+        public MSSQLServiceServer(ConfigureMSSQLServerConnectorComponent configuration)
         {
             _baseUrl = configuration.BaseApiUrl;
         }
@@ -22,7 +22,7 @@ namespace MSSQLServerMonitoring.Connector.Services
             List<EventMSSQLServer> EventMSSQLServers = new List<EventMSSQLServer>();
             EventMSSQLServer EventMSSQLServerItem = null;
 
-            using (DbDataReader dataReader = GetDataReader("ReaderEvents", parameterList, CommandType.StoredProcedure))
+            using (DbDataReader dataReader = GetDataReader("ReaderStatemetMSSQLServer", parameterList, CommandType.StoredProcedure))
             {
                 if (dataReader != null && dataReader.HasRows)
                 {

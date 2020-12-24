@@ -8,8 +8,8 @@ namespace MSSQLServerMonitoring.Hangfire
 {
     public class SQLServerConnectorServiceAdupter : ISQLServerServic
     {
-        IServiceMSSQLServer _serviceMSSQLServer;
-        public SQLServerConnectorServiceAdupter(IServiceMSSQLServer serviceMSSQLServer)
+        IMSSQLServiceServer _serviceMSSQLServer;
+        public SQLServerConnectorServiceAdupter(IMSSQLServiceServer serviceMSSQLServer)
         {
             _serviceMSSQLServer = serviceMSSQLServer;
         }

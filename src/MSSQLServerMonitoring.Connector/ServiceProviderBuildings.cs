@@ -9,9 +9,10 @@ namespace MSSQLServerMonitoring.Connector
         // добавляем в сервис
         public static IServiceCollection AddMSSQLServerConnector(this IServiceCollection services, ConfigureMSSQLServerConnectorComponent configuration)
         {
-            return services
-                .AddSingleton(configuration)
-                .AddScoped<IServiceMSSQLServer, ServiceMSSQLServer>();
+            services.AddSingleton(configuration);
+            services.AddScoped<IMSSQLServiceServer, MSSQLServiceServer>();
+
+            return services;
         }
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using MSSQLServerMonitoring.Connector;
 
 namespace MSSQLServerMonitoring.AdminApi
 {
@@ -39,6 +40,7 @@ namespace MSSQLServerMonitoring.AdminApi
                 .AddBaseServices()
                 .AddApplication()
                 .AddVersioning( 1, 0 )
+                .AddMSSQLServerConnector(Configuration.GetSection("MonitorConnection").Get<ConfigureMSSQLServerConnectorComponent>())
                 .AddDefaultMvc("MSSQLServerMonitoring.AdminApi")
                 .AddJsonOptions( options =>
                 {
