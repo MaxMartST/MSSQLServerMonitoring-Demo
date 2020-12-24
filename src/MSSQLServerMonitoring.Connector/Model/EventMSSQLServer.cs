@@ -15,7 +15,7 @@ namespace MSSQLServerMonitoring.Connector.Model
         public int DatabaseId { get; set; }
         public string DatabaseName { get; set; }
         public string Statement { get; set; }
-        public long Duration { get; set; }
+        public decimal Duration { get; set; }
         public long CpuTime { get; set; }
         public long PhysicalReads { get; set; }
         public long LogicalReads { get; set; }

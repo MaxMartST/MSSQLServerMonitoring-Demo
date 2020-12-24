@@ -39,7 +39,7 @@ namespace MSSQLServerMonitoring.Connector.Services
                         EventMSSQLServerItem.DatabaseId = (int)dataReader["DatabaseId"];
                         EventMSSQLServerItem.DatabaseName = (string)dataReader["DatabaseName"];
                         EventMSSQLServerItem.Statement = (string)dataReader["Statement"];
-                        EventMSSQLServerItem.Duration = (long)dataReader["Duration"];
+                        EventMSSQLServerItem.Duration = (decimal)dataReader["Duration"];
                         EventMSSQLServerItem.CpuTime = (long)dataReader["CpuTime"];
                         EventMSSQLServerItem.PhysicalReads = (long)dataReader["PhysicalReads"];
                         EventMSSQLServerItem.LogicalReads = (long)dataReader["LogicalReads"];

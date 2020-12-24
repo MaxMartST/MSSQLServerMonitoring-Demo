@@ -16,10 +16,10 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
 
         public List<EventMSSQLServer> GetCompletedQuery()
         {
-            List<EventMSSQLServer> ventMSSQLServers = new List<EventMSSQLServer>();
-            ventMSSQLServers = _sQLServerServic.GetEventsFromSession();
+            //List<EventMSSQLServer> ventMSSQLServers = //new List<EventMSSQLServer>();
+            //ventMSSQLServers = _sQLServerServic.GetEventsFromSession();
 
-            return ventMSSQLServers;
+            return _sQLServerServic.GetEventsFromSession();
         }
     }
 }
