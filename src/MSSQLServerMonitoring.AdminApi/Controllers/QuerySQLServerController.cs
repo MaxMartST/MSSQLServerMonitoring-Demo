@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MSSQLServerMonitoring.Application.RawDataDownload;
+using MSSQLServerMonitoring.Connector.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +10,22 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventSQLServerController : ControllerBase
+    public class QuerySQLServerController : ControllerBase
     {
-        // GET: api/<ValuesController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly SQLRawDataDownload _sQLRawDataDownload;
+
+        public QuerySQLServerController(SQLRawDataDownload sQLRawDataDownload)
         {
-            return new string[] { "value1", "value2" };
+            _sQLRawDataDownload = sQLRawDataDownload;
+        }
+
+        // GET: api/<ValuesController 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            List<EventMSSQLServer> requests = _sQLRawDataDownload.GetCompletedQuery();
+            
+            return Ok(requests);
         }
 
         // GET api/<ValuesController>/5
