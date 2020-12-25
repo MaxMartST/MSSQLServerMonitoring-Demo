@@ -30,12 +30,15 @@ namespace MSSQLServerMonitoring.Infrastructure.Data.UserModel
         public Task AddUser( User user )
         {
             _ctx.User.Add( user );
+            _ctx.SaveChanges();
+
             return Task.CompletedTask;
         }
 
         public Task UpdateUser( User user )
         {
             _ctx.User.Update( user );
+
             return Task.CompletedTask;
         }
     }

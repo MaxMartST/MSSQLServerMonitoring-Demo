@@ -14,7 +14,7 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
     {
         private readonly IUserRepository _userRepository;
 
-        public UsersController( IUserRepository userRepository )
+        public UsersController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -24,6 +24,12 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
         {
             List<User> users = await _userRepository.GetAll();
             return users.Map();
+        }
+
+        [HttpPost]
+        public async Task AddUser(User user)
+        {
+            await _userRepository.AddUser(user);
         }
     }
 }

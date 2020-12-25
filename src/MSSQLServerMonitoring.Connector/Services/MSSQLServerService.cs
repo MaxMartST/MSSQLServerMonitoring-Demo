@@ -8,10 +8,10 @@ using System.Text;
 
 namespace MSSQLServerMonitoring.Connector.Services
 {
-    public class MSSQLServiceServer : IMSSQLServiceServer
+    public class MSSQLServerService : IMSSQLServerService
     {
         private readonly string _baseUrl;
-        public MSSQLServiceServer(ConfigureMSSQLServerConnectorComponent configuration)
+        public MSSQLServerService(ConfigureMSSQLServerConnectorComponent configuration)
         {
             _baseUrl = configuration.BaseApiUrl;
         }

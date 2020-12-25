@@ -10,7 +10,7 @@ namespace MSSQLServerMonitoring.Hangfire
     {
         public static IServiceCollection AddAdupter(this IServiceCollection services)
         {
-            services.AddScoped<ISQLServerServic, SQLServerConnectorServiceAdupter>();
+            services.AddScoped<ISQLServerService, SQLServerConnectorServiceAdupter>();
 
             return services;
         }

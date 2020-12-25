@@ -10,7 +10,7 @@ namespace MSSQLServerMonitoring.Connector
         public static IServiceCollection AddMSSQLServerConnector(this IServiceCollection services, ConfigureMSSQLServerConnectorComponent configuration)
         {
             services.AddSingleton(configuration);
-            services.AddScoped<IMSSQLServiceServer, MSSQLServiceServer>();
+            services.AddScoped<IMSSQLServerService, MSSQLServerService>();
 
             return services;
         }

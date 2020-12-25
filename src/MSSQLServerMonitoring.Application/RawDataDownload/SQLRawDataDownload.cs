@@ -5,11 +5,11 @@ using System.Text;
 
 namespace MSSQLServerMonitoring.Application.RawDataDownload
 {
-    public class SQLRawDataDownload
+    public class SQLRawDataDownload : ISQLRawDataDownload
     {
         // логика приложения получить сырые данные по событиям и сохранить анамальные запросы
-        ISQLServerServic _sQLServerServic;
-        public SQLRawDataDownload(ISQLServerServic sQLServerServic)
+        ISQLServerService _sQLServerServic;
+        public SQLRawDataDownload(ISQLServerService sQLServerServic)
         {
             _sQLServerServic = sQLServerServic;
         }

@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 namespace MSSQLServerMonitoring.Hangfire
 {
-    public class SQLServerConnectorServiceAdupter : ISQLServerServic
+    public class SQLServerConnectorServiceAdupter : ISQLServerService
     {
-        IMSSQLServiceServer _serviceMSSQLServer;
-        public SQLServerConnectorServiceAdupter(IMSSQLServiceServer serviceMSSQLServer)
+        IMSSQLServerService _serviceMSSQLServer;
+        public SQLServerConnectorServiceAdupter(IMSSQLServerService serviceMSSQLServer)
         {
             _serviceMSSQLServer = serviceMSSQLServer;
         }

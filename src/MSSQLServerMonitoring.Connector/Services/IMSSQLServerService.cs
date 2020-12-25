@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MSSQLServerMonitoring.Connector.Services
 {
-    public interface IMSSQLServiceServer
+    public interface IMSSQLServerService
     {
         List<EventMSSQLServer> GetNewQueryHistory();
     }

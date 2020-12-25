@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MSSQLServerMonitoring.Application.RawDataDownload
 {
-    public interface ISQLServerServic
+    public interface ISQLServerService
     {
         //пока возращаем EventMSSQLServer, но нужна будет своя доменная модель
         List<EventMSSQLServer> GetEventsFromSession();
