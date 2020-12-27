@@ -8,6 +8,6 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
 {
     public interface ISQLRawDataDownload
     {
-        List<Query> GetCompletedQuery();
+        List<Query> FilterOutNewSQLServerRequests();
     }
 }

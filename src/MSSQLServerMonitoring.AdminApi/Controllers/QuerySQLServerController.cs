@@ -24,7 +24,7 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<Query> requests = _sQLRawDataDownload.GetCompletedQuery();
+            List<Query> requests = _sQLRawDataDownload.FilterOutNewSQLServerRequests();
             
             return Ok(requests);
         }

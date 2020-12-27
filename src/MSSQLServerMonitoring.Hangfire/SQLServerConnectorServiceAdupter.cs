@@ -3,7 +3,7 @@ using MSSQLServerMonitoring.Application.RawDataDownload;
 using MSSQLServerMonitoring.Connector.Model;
 using MSSQLServerMonitoring.Connector.Services;
 using MSSQLServerMonitoring.Domain.QueryModel;
-using System;
+using MSSQLServerMonitoring.Hangfire.Mappers;
 using System.Collections.Generic;
 
 namespace MSSQLServerMonitoring.Hangfire
@@ -18,7 +18,7 @@ namespace MSSQLServerMonitoring.Hangfire
 
         public List<Query> GetEventsFromSession()
         {
-            List<Query> queries = new List<Query>(); ;
+            List<Query> queries = new List<Query>();
             List<EventMSSQLServer> ventMSSQLServers = _serviceMSSQLServer.GetNewQueryHistory();
 
 
