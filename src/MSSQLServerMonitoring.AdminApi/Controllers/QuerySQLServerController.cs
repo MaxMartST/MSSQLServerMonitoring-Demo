@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MSSQLServerMonitoring.Application.RawDataDownload;
 using MSSQLServerMonitoring.Connector.Model;
+using MSSQLServerMonitoring.Domain.QueryModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<EventMSSQLServer> requests = _sQLRawDataDownload.GetCompletedQuery();
+            List<Query> requests = _sQLRawDataDownload.GetCompletedQuery();
             
             return Ok(requests);
         }

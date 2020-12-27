@@ -1,12 +1,14 @@
-﻿using MSSQLServerMonitoring.Application.RawDataDownload;
+﻿using AutoMapper;
+using MSSQLServerMonitoring.Application.RawDataDownload;
 using MSSQLServerMonitoring.Connector.Model;
 using MSSQLServerMonitoring.Connector.Services;
+using MSSQLServerMonitoring.Domain.QueryModel;
 using System;
 using System.Collections.Generic;
 
 namespace MSSQLServerMonitoring.Hangfire
 {
-    public class SQLServerConnectorServiceAdupter : ISQLServerService
+    public class SQLServerConnectorServiceAdupter : Profile, ISQLServerService
     {
         IMSSQLServerService _serviceMSSQLServer;
         public SQLServerConnectorServiceAdupter(IMSSQLServerService serviceMSSQLServer)
@@ -14,13 +16,13 @@ namespace MSSQLServerMonitoring.Hangfire
             _serviceMSSQLServer = serviceMSSQLServer;
         }
 
-        public List<EventMSSQLServer> GetEventsFromSession()
+        public List<Query> GetEventsFromSession()
         {
-            List<EventMSSQLServer> ventMSSQLServers = new List<EventMSSQLServer>();
+            List<Query> queries = new List<Query>(); ;
+            List<EventMSSQLServer> ventMSSQLServers = _serviceMSSQLServer.GetNewQueryHistory();
 
-            ventMSSQLServers = _serviceMSSQLServer.GetNewQueryHistory();
 
-            return ventMSSQLServers;
+            return ventMSSQLServers.Map();
         }
 
         // конфигурируем serviceMSSQLServer

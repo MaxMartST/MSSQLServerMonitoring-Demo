@@ -1,4 +1,5 @@
 ﻿using MSSQLServerMonitoring.Connector.Model;
+using MSSQLServerMonitoring.Domain.QueryModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,7 +15,7 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
             _sQLServerServic = sQLServerServic;
         }
 
-        public List<EventMSSQLServer> GetCompletedQuery()
+        public List<Query> GetCompletedQuery()
         {
             //List<EventMSSQLServer> ventMSSQLServers = //new List<EventMSSQLServer>();
             //ventMSSQLServers = _sQLServerServic.GetEventsFromSession();
