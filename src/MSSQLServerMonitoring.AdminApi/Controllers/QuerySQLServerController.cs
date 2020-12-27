@@ -13,20 +13,20 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
     [ApiController]
     public class QuerySQLServerController : ControllerBase
     {
-        private readonly SQLRawDataDownload _sQLRawDataDownload;
+        private readonly IQueryRepository _iQueryRepository;
 
-        public QuerySQLServerController(SQLRawDataDownload sQLRawDataDownload)
+        public QuerySQLServerController(IQueryRepository iQueryRepository)
         {
-            _sQLRawDataDownload = sQLRawDataDownload;
+            _iQueryRepository = iQueryRepository;
         }
 
         // GET: api/<ValuesController 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<List<Query>> ListAll()
         {
-            List<Query> requests = _sQLRawDataDownload.FilterOutNewSQLServerRequests();
-            
-            return Ok(requests);
+            List<Query> requests = await _iQueryRepository.GetAll();
+
+            return requests;
         }
 
         // GET api/<ValuesController>/5

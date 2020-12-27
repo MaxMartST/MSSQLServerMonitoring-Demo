@@ -8,6 +8,6 @@ namespace MSSQLServerMonitoring.Connector.Services
 {
     public interface IMSSQLServerService
     {
-        List<EventMSSQLServer> GetNewQueryHistory();
+        List<EventMSSQLServer> GetNnewHistoryQueriesSQLServer();
     }
 }

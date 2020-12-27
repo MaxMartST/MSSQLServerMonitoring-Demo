@@ -17,7 +17,7 @@ namespace MSSQLServerMonitoring.Connector.Services
             _baseUrl = configuration.BaseApiUrl;
         }
 
-        public List<EventMSSQLServer> GetNewQueryHistory()
+        public List<EventMSSQLServer> GetNnewHistoryQueriesSQLServer()
         {
             List<DbParameter> parameterList = new List<DbParameter>();
             List<EventMSSQLServer> EventMSSQLServers = new List<EventMSSQLServer>();

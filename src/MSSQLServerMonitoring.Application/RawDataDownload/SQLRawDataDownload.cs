@@ -23,25 +23,41 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
             //List<EventMSSQLServer> ventMSSQLServers = //new List<EventMSSQLServer>();
             //ventMSSQLServers = _sQLServerServic.GetEventsFromSession();
 
-            return _sQLServerServic.GetEventsFromSession();
+            return _sQLServerServic.GetQueriesFromSQLServer();
         }
 
         public List<Query> FilterOutNewSQLServerRequests()
         {
             //Фильтруем новые запросы на сервере SQL и сохраняем в БД
 
-            //List<Query> newQueries = new List<Query>();
-            queries = _sQLServerServic.GetEventsFromSession();
-            AddNewQueriesToBatabase(queries);
+            var newQueries = new List<Query>();
+            var serverQueries = GetCompletedQuery();// получить запросы ссервера
+            var requestsDb = _iQueryRepository.GetAll().Result;// получить запросы из БД
 
-            return queries;
+            // Перебираем serverQueries, проверяем еть ли он в БД
+            foreach (Query sQuery in serverQueries)
+            {
+                int index = requestsDb.BinarySearch(sQuery);
+
+                if (index < 0)
+                {
+                    newQueries.Add(sQuery);
+                }
+            }
+
+            AddNewQueriesToBatabase(newQueries);
+
+            return newQueries;
         }
 
         private void AddNewQueriesToBatabase(List<Query> newQueries)
         {
-            foreach (Query query in queries)
+            if (newQueries != null)
             {
-                _iQueryRepository.AddQuery(query);
+                foreach (Query query in newQueries)
+                {
+                    _iQueryRepository.AddQuery(query);
+                }
             }
         }
     }
