@@ -32,33 +32,54 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
 
             var newQueries = new List<Query>();
             var serverQueries = GetCompletedQuery();// получить запросы ссервера
-            var requestsDb = _iQueryRepository.GetAll().Result;// получить запросы из БД
+            var dbQueries = _iQueryRepository.GetAll().Result;// получить запросы из БД
 
-            // Перебираем serverQueries, проверяем еть ли он в БД
-            foreach (Query sQuery in serverQueries)
+            if (dbQueries.Count == 0)
             {
-                int index = requestsDb.BinarySearch(sQuery);
+                AddNewQueriesToBatabase(serverQueries);
 
-                if (index < 0)
-                {
-                    newQueries.Add(sQuery);
-                }
+                return serverQueries;
             }
+            else
+            {
 
-            AddNewQueriesToBatabase(newQueries);
+                // Перебираем serverQueries, проверяем еть ли он в БД
+                foreach (Query sQ in serverQueries)
+                {
+                    int index = dbQueries.FindIndex(dbQ => sQ.SqlText == dbQ.SqlText && sQ.TimeStamp == dbQ.TimeStamp && sQ.ClientHn == dbQ.ClientHn && sQ.DatabaseId == dbQ.DatabaseId && sQ.Duration == dbQ.Duration && sQ.CpuTime == dbQ.CpuTime && sQ.PhysicalReads == dbQ.PhysicalReads && sQ.LogicalReads == dbQ.LogicalReads && sQ.Writes == dbQ.Writes);
 
-            return newQueries;
+                    if (index == -1)
+                    {
+                        newQueries.Add(sQ);
+                    }
+                }
+
+                AddNewQueriesToBatabase(newQueries);
+
+                return newQueries;
+            }
         }
 
         private void AddNewQueriesToBatabase(List<Query> newQueries)
         {
-            if (newQueries != null)
+            if (newQueries.Count != 0)
             {
                 foreach (Query query in newQueries)
                 {
                     _iQueryRepository.AddQuery(query);
                 }
             }
+        }
+
+        private bool IdenticalQueties(Query sQ, Query dbQ)
+        {
+            if (sQ.SqlText == dbQ.SqlText && sQ.TimeStamp == dbQ.TimeStamp && sQ.ClientHn == dbQ.ClientHn && sQ.DatabaseId == dbQ.DatabaseId && sQ.Duration == dbQ.Duration && sQ.CpuTime == dbQ.CpuTime && sQ.PhysicalReads == dbQ.PhysicalReads && sQ.LogicalReads == dbQ.LogicalReads && sQ.Writes == dbQ.Writes)
+            {
+                return true;
+            }
+            //if (sQ.SqlText == dbQ.SqlText && sQ.DatabaseId == )
+
+            return false;
         }
     }
 }
