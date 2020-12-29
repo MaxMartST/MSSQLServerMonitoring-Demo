@@ -2,7 +2,7 @@
 
 namespace MSSQLServerMonitoring.Infrastructure.Migrations.Migrations
 {
-    public partial class CreateProc : Migration
+    public partial class CreateProcReaderStatemetMSSQLServer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,6 +16,7 @@ namespace MSSQLServerMonitoring.Infrastructure.Migrations.Migrations
                 + "WHERE   [s].[name] = N'StatementEvents' AND "
                 + "[t].[target_name] = N'ring_buffer'; "
                 + "SELECT DATEADD(hh, DATEDIFF(hh, GETUTCDATE(), CURRENT_TIMESTAMP), n.value('(@timestamp)[1]', 'datetime2')) AS [TimeStamp], "
+                + "n.value(N'(action[@name=\"attach_activity_id\"]/value)[1]', N'nvarchar(max)') AS [AttachActivityId], "
                 + "n.value(N'(@name)[1]', N'varchar(50)') AS [EventName], "
                 + "n.value(N'(@package)[1]', N'varchar(50)') AS [PackageName], "
                 + "n.value(N'(action[@name=\"client_hostname\"]/value)[1]', N'nvarchar(max)') AS [ClientHn], "

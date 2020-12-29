@@ -17,6 +17,7 @@ namespace MSSQLServerMonitoring.Connector.Services
             _baseUrl = configuration.BaseApiUrl;
         }
 
+        // Отправляем параметром время
         public List<EventMSSQLServer> GetNnewHistoryQueriesSQLServer()
         {
             List<DbParameter> parameterList = new List<DbParameter>();
@@ -32,6 +33,7 @@ namespace MSSQLServerMonitoring.Connector.Services
                         EventMSSQLServerItem = new EventMSSQLServer();
 
                         EventMSSQLServerItem.TimeStamp = (DateTime)dataReader["TimeStamp"];
+                        EventMSSQLServerItem.AttachActivityId = (string)dataReader["AttachActivityId"];
                         EventMSSQLServerItem.EventName = (string)dataReader["EventName"];
                         EventMSSQLServerItem.PackageName = (string)dataReader["PackageName"];
                         EventMSSQLServerItem.ClientHn = (string)dataReader["ClientHn"];

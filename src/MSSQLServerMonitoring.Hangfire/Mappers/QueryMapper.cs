@@ -14,6 +14,7 @@ namespace MSSQLServerMonitoring.Hangfire.Mappers
             return new Query
             {
                 TimeStamp = eventMSSQLServer.TimeStamp,
+                AttachActivityId = eventMSSQLServer.AttachActivityId,
                 EventName = eventMSSQLServer.EventName,
                 PackageName = eventMSSQLServer.PackageName,
                 ClientHn = eventMSSQLServer.ClientHn,

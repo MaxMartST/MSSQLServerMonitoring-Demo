@@ -7,6 +7,7 @@ namespace MSSQLServerMonitoring.Connector.Model
     public class EventMSSQLServer
     {
         public DateTime TimeStamp { get; set; }
+        public string AttachActivityId { get; set; }
         public string EventName { get; set; }
         public string PackageName { get; set; }
         public string ClientHn { get; set; }

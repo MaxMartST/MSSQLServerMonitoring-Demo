@@ -8,6 +8,7 @@ namespace MSSQLServerMonitoring.Domain.QueryModel
     public class Query : Entity, IAggregateRoot
     {
         public DateTime TimeStamp { get; set; }
+        public string AttachActivityId { get; set; }
         public string EventName { get; set; }
         public string PackageName { get; set; }
         public string ClientHn { get; set; }
