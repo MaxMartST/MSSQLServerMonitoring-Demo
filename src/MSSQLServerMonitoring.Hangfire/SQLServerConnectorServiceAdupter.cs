@@ -16,10 +16,10 @@ namespace MSSQLServerMonitoring.Hangfire
             _serviceMSSQLServer = serviceMSSQLServer;
         }
 
-        public List<Query> GetQueriesFromSQLServer()
+        public List<Query> GetQueriesFromSQLServer(int id)
         {
             List<Query> queries = new List<Query>();
-            List<EventMSSQLServer> ventMSSQLServers = _serviceMSSQLServer.GetNnewHistoryQueriesSQLServer();//get a new history of requests
+            List<EventMSSQLServer> ventMSSQLServers = _serviceMSSQLServer.GetNnewHistoryQueriesSQLServer(id);//get a new history of requests
 
 
             return ventMSSQLServers.Map();

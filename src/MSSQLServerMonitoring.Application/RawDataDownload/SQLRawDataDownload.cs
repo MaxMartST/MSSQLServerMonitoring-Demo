@@ -18,12 +18,12 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
             _iQueryRepository = iQueryRepository;
         }
 
-        private List<Query> GetCompletedQuery()
+        private List<Query> GetCompletedQuery(int id)
         {
             //List<EventMSSQLServer> ventMSSQLServers = //new List<EventMSSQLServer>();
             //ventMSSQLServers = _sQLServerServic.GetEventsFromSession();
 
-            return _sQLServerServic.GetQueriesFromSQLServer();
+            return _sQLServerServic.GetQueriesFromSQLServer(id);
         }
 
         public List<Query> FilterOutNewSQLServerRequests()
@@ -31,7 +31,7 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
             //Фильтруем новые запросы на сервере SQL и сохраняем в БД
 
             var newQueries = new List<Query>();
-            var serverQueries = GetCompletedQuery();// получить запросы ссервера
+            var serverQueries = GetCompletedQuery(11);// получить запросы ссервера
             var dbQueries = _iQueryRepository.GetAll().Result;// получить запросы из БД
 
             if (dbQueries.Count == 0)

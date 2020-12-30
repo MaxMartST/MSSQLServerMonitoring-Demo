@@ -18,13 +18,15 @@ namespace MSSQLServerMonitoring.Connector.Services
         }
 
         // Отправляем параметром время
-        public List<EventMSSQLServer> GetNnewHistoryQueriesSQLServer()
+        public List<EventMSSQLServer> GetNnewHistoryQueriesSQLServer(int id)
         {
             List<DbParameter> parameterList = new List<DbParameter>();
             List<EventMSSQLServer> EventMSSQLServers = new List<EventMSSQLServer>();
             EventMSSQLServer EventMSSQLServerItem = null;
 
-            using (DbDataReader dataReader = GetDataReader("ReaderStatemetMSSQLServer", parameterList, CommandType.StoredProcedure))
+            parameterList.Add(GetParameter("idBD", id));
+
+            using (DbDataReader dataReader = GetDataReader("TestProc", parameterList, CommandType.StoredProcedure))
             {
                 if (dataReader != null && dataReader.HasRows)
                 {
@@ -54,6 +56,7 @@ namespace MSSQLServerMonitoring.Connector.Services
                     }
                 }
             }
+
             return EventMSSQLServers;
         }
 
