@@ -4,6 +4,7 @@ using MSSQLServerMonitoring.Connector.Model;
 using MSSQLServerMonitoring.Connector.Services;
 using MSSQLServerMonitoring.Domain.QueryModel;
 using MSSQLServerMonitoring.Hangfire.Mappers;
+using System;
 using System.Collections.Generic;
 
 namespace MSSQLServerMonitoring.Hangfire
@@ -16,10 +17,10 @@ namespace MSSQLServerMonitoring.Hangfire
             _serviceMSSQLServer = serviceMSSQLServer;
         }
 
-        public List<Query> GetQueriesFromSQLServer(int id)
+        public List<Query> GetQueriesFromSQLServer(DateTime timeToAsk)
         {
             List<Query> queries = new List<Query>();
-            List<EventMSSQLServer> ventMSSQLServers = _serviceMSSQLServer.GetNnewHistoryQueriesSQLServer(id);//get a new history of requests
+            List<EventMSSQLServer> ventMSSQLServers = _serviceMSSQLServer.GetNnewHistoryQueriesSQLServer(timeToAsk);//get a new history of requests
 
 
             return ventMSSQLServers.Map();

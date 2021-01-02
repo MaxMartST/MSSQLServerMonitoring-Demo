@@ -18,15 +18,15 @@ namespace MSSQLServerMonitoring.Connector.Services
         }
 
         // Отправляем параметром время
-        public List<EventMSSQLServer> GetNnewHistoryQueriesSQLServer(int id)
+        public List<EventMSSQLServer> GetNnewHistoryQueriesSQLServer(DateTime timeToAsk)
         {
             List<DbParameter> parameterList = new List<DbParameter>();
             List<EventMSSQLServer> EventMSSQLServers = new List<EventMSSQLServer>();
             EventMSSQLServer EventMSSQLServerItem = null;
 
-            parameterList.Add(GetParameter("idBD", id));
+            parameterList.Add(GetParameter("timeToAsk", timeToAsk));
 
-            using (DbDataReader dataReader = GetDataReader("TestProc", parameterList, CommandType.StoredProcedure))
+            using (DbDataReader dataReader = GetDataReader("GiveRequestsOnTime", parameterList, CommandType.StoredProcedure))
             {
                 if (dataReader != null && dataReader.HasRows)
                 {

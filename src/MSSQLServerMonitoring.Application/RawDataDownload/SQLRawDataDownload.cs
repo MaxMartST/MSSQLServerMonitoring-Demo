@@ -18,20 +18,23 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
             _iQueryRepository = iQueryRepository;
         }
 
-        private List<Query> GetCompletedQuery(int id)
+        private List<Query> GetCompletedQuery(DateTime timeToAsk)
         {
             //List<EventMSSQLServer> ventMSSQLServers = //new List<EventMSSQLServer>();
             //ventMSSQLServers = _sQLServerServic.GetEventsFromSession();
 
-            return _sQLServerServic.GetQueriesFromSQLServer(id);
+            return _sQLServerServic.GetQueriesFromSQLServer(timeToAsk);
         }
 
         public List<Query> FilterOutNewSQLServerRequests()
         {
             //Фильтруем новые запросы на сервере SQL и сохраняем в БД
-
             var newQueries = new List<Query>();
-            var serverQueries = GetCompletedQuery(11);// получить запросы ссервера
+
+            DateTime regDate = DateTime.Now;
+            regDate = regDate.AddMinutes(-1);// время запросов выполненых минуту назад 
+
+            var serverQueries = GetCompletedQuery(regDate);// получить запросы ссервера
             var dbQueries = _iQueryRepository.GetAll().Result;// получить запросы из БД
 
             if (dbQueries.Count == 0)
