@@ -15,11 +15,19 @@ namespace MSSQLServerMonitoring.Hangfire.EventBuffer
             _ctx = ctx;
         }
 
-        public Task ClearEventSessionBuffer()
+        public async Task ClearEventSessionBuffer()
         {
-            _ctx.Database.ExecuteSqlCommandAsync("EXECUTE ClearEventSessionBuffer");
+            //_ctx.Database.ExecuteSqlCommandAsync("EXECUTE ClearEventSessionBuffer");
+            using (var connection = _ctx.Database.GetDbConnection())
+            {
+                await connection.OpenAsync();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "EXECUTE ClearEventSessionBuffer";
+                    var result = await command.ExecuteNonQueryAsync();
+                }
+            }
 
-            return Task.CompletedTask;
         }
     }
 }

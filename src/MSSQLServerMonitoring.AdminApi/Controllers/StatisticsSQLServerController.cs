@@ -13,8 +13,8 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
     {
         private readonly SQLRawDataDownload _sQLRawDataDownload;
         //private readonly ISQLRawDataDownload _sQLRawDataDownload;
-        private readonly EventBufferRepository _eventBufferRepository;
-        public StatisticsSQLServerController(SQLRawDataDownload sQLRawDataDownload, EventBufferRepository eventBufferRepository)
+        private readonly IEventBufferRepository _eventBufferRepository;
+        public StatisticsSQLServerController(SQLRawDataDownload sQLRawDataDownload, IEventBufferRepository eventBufferRepository)
         {
             _sQLRawDataDownload = sQLRawDataDownload;
             _eventBufferRepository = eventBufferRepository;
