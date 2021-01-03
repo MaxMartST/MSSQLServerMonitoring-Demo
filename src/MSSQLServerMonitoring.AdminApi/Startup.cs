@@ -13,6 +13,7 @@ using Newtonsoft.Json.Converters;
 using MSSQLServerMonitoring.Connector;
 using MSSQLServerMonitoring.Hangfire;
 using Microsoft.AspNetCore.Http;
+using MSSQLServerMonitoring.Infrastructure.Procedure;
 
 namespace MSSQLServerMonitoring.AdminApi
 {
@@ -45,6 +46,7 @@ namespace MSSQLServerMonitoring.AdminApi
                 //.AddMSSQLServerConnector(Configuration.GetSection("ConnectionStrings:ExampleConnection").Get<ConfigureMSSQLServerConnectorComponent>())
                 .AddMSSQLServerConnector(new ConfigureMSSQLServerConnectorComponent { BaseApiUrl = Configuration.GetConnectionString("MonitorConnection") })
                 .AddAdupter()
+                .AddEventBuffer()
                 .AddDefaultMvc("MSSQLServerMonitoring.AdminApi")
                 .AddJsonOptions( options =>
                 {

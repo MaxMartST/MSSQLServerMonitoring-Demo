@@ -49,7 +49,7 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
                 // Перебираем serverQueries, проверяем еть ли он в БД
                 foreach (Query sQ in serverQueries)
                 {
-                    int index = dbQueries.FindIndex(dbQ => sQ.SqlText == dbQ.SqlText && sQ.TimeStamp == dbQ.TimeStamp && sQ.ClientHn == dbQ.ClientHn && sQ.DatabaseId == dbQ.DatabaseId && sQ.Duration == dbQ.Duration && sQ.CpuTime == dbQ.CpuTime && sQ.PhysicalReads == dbQ.PhysicalReads && sQ.LogicalReads == dbQ.LogicalReads && sQ.Writes == dbQ.Writes);
+                    int index = dbQueries.FindIndex(dbQ => IdenticalRequests(sQ, dbQ));
 
                     if (index == -1)
                     {
@@ -74,9 +74,9 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
             }
         }
 
-        private bool IdenticalQueties(Query sQ, Query dbQ)
+        private bool IdenticalRequests(Query sQ, Query dbQ)
         {
-            if (sQ.SqlText == dbQ.SqlText && sQ.TimeStamp == dbQ.TimeStamp && sQ.ClientHn == dbQ.ClientHn && sQ.DatabaseId == dbQ.DatabaseId && sQ.Duration == dbQ.Duration && sQ.CpuTime == dbQ.CpuTime && sQ.PhysicalReads == dbQ.PhysicalReads && sQ.LogicalReads == dbQ.LogicalReads && sQ.Writes == dbQ.Writes)
+            if (sQ.AttachActivityId == dbQ.AttachActivityId)
             {
                 return true;
             }

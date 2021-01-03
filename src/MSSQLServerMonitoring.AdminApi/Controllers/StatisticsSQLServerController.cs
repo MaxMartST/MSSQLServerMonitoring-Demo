@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MSSQLServerMonitoring.Application.RawDataDownload;
 using MSSQLServerMonitoring.Domain.QueryModel;
+using MSSQLServerMonitoring.Hangfire.EventBuffer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,13 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
     public class StatisticsSQLServerController : Controller
     {
         private readonly SQLRawDataDownload _sQLRawDataDownload;
-        public StatisticsSQLServerController(SQLRawDataDownload sQLRawDataDownload)
+        //private readonly ISQLRawDataDownload _sQLRawDataDownload;
+        private readonly EventBufferRepository _eventBufferRepository;
+        public StatisticsSQLServerController(SQLRawDataDownload sQLRawDataDownload, EventBufferRepository eventBufferRepository)
         {
             _sQLRawDataDownload = sQLRawDataDownload;
+            _eventBufferRepository = eventBufferRepository;
+
         }
         public List<Query> GetServerStatistics()
         {
@@ -21,5 +26,9 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
             return _sQLRawDataDownload.FilterOutNewSQLServerRequests();
         }
 
+        public async Task CleanBuffer()
+        {
+            await _eventBufferRepository.ClearEventSessionBuffer();
+        }
     }
 }
