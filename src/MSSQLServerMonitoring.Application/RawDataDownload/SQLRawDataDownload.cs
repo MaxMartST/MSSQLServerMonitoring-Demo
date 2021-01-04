@@ -3,6 +3,7 @@ using MSSQLServerMonitoring.Domain.QueryModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MSSQLServerMonitoring.Application.RawDataDownload
 {
@@ -26,13 +27,13 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
             return _sQLServerServic.GetQueriesFromSQLServer(timeToAsk);
         }
 
-        public List<Query> FilterOutNewSQLServerRequests()
+        public Task FilterOutNewSQLServerRequests()
         {
             //Фильтруем новые запросы на сервере SQL и сохраняем в БД
             var newQueries = new List<Query>();
 
             DateTime regDate = DateTime.Now;
-            regDate = regDate.AddMinutes(-1);// время запросов выполненых минуту назад 
+            regDate = regDate.AddSeconds(-5);// время запросов выполненых минуту назад 
 
             var serverQueries = GetCompletedQuery(regDate);// получить запросы ссервера
             var dbQueries = _iQueryRepository.GetAll().Result;// получить запросы из БД
@@ -40,8 +41,7 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
             if (dbQueries.Count == 0)
             {
                 AddNewQueriesToBatabase(serverQueries);
-
-                return serverQueries;
+                return Task.CompletedTask;
             }
             else
             {
@@ -58,8 +58,7 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
                 }
 
                 AddNewQueriesToBatabase(newQueries);
-
-                return newQueries;
+                return Task.CompletedTask;
             }
         }
 

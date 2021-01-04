@@ -29,9 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.Appli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.IntegrationTests", "tests\MSSQLServerMonitoring.IntegrationTests\MSSQLServerMonitoring.IntegrationTests.csproj", "{63781739-490F-44A9-AE00-D8D0D0AC2E9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSSQLServerMonitoring.Connector", "src\MSSQLServerMonitoring.Connector\MSSQLServerMonitoring.Connector.csproj", "{954C4F36-905A-4AD1-B2C6-056F4306889B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.Connector", "src\MSSQLServerMonitoring.Connector\MSSQLServerMonitoring.Connector.csproj", "{954C4F36-905A-4AD1-B2C6-056F4306889B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSSQLServerMonitoring.Hangfire", "src\MSSQLServerMonitoring.Hangfire\MSSQLServerMonitoring.Hangfire.csproj", "{552BBC10-32C7-47BB-8ADD-AC79D8E72F59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.HangFire", "src\MSSQLServerMonitoring.Hangfire\MSSQLServerMonitoring.HangFire.csproj", "{552BBC10-32C7-47BB-8ADD-AC79D8E72F59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

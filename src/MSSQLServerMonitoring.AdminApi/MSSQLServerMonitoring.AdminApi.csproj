@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.7.18" />
     <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
@@ -36,7 +37,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MSSQLServerMonitoring.Application\MSSQLServerMonitoring.Application.csproj" />
     <ProjectReference Include="..\MSSQLServerMonitoring.Domain\MSSQLServerMonitoring.Domain.csproj" />
-    <ProjectReference Include="..\MSSQLServerMonitoring.Hangfire\MSSQLServerMonitoring.Hangfire.csproj" />
+    <ProjectReference Include="..\MSSQLServerMonitoring.Hangfire\MSSQLServerMonitoring.HangFire.csproj" />
     <ProjectReference Include="..\MSSQLServerMonitoring.Infrastructure\MSSQLServerMonitoring.Infrastructure.csproj" />
   </ItemGroup>
 
