@@ -32,6 +32,7 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
             var newQueries = new List<Query>();
 
             DateTime regDate = DateTime.Now;
+            //regDate = regDate.AddSeconds(-5);
             regDate = regDate.AddMinutes(-1);// время запросов выполненых минуту назад 
 
             var serverQueries = GetCompletedQuery(regDate);// получить запросы ссервера
