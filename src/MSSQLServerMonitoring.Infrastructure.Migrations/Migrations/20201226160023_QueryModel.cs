@@ -13,6 +13,7 @@ namespace MSSQLServerMonitoring.Infrastructure.Migrations.Migrations
                 {
                     Id = table.Column<int>(nullable: false),
                     TimeStamp = table.Column<DateTime>(nullable: false),
+                    AttachActivityId = table.Column<string>(nullable: true),
                     EventName = table.Column<string>(nullable: true),
                     PackageName = table.Column<string>(nullable: true),
                     ClientHn = table.Column<string>(nullable: true),

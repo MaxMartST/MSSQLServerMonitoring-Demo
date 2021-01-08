@@ -1,5 +1,6 @@
 ﻿using MSSQLServerMonitoring.Connector.Model;
 using MSSQLServerMonitoring.Domain.Model;
+using MSSQLServerMonitoring.Infrastructure.Wrapper;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,17 +11,12 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
     {
         // логика приложения получить сырые данные по событиям и сохранить анамальные запросы
         ISQLServerService _sQLServerServic;
-        IQueryRepository _iQueryRepository;
-        List<Query> queries;
-        public SQLRawDataDownload(ISQLServerService sQLServerServic, IQueryRepository iQueryRepository)
+        IRepositoryWrapper _repositoryWrapper;
+        
+        public SQLRawDataDownload(ISQLServerService sQLServerServic, IRepositoryWrapper repositoryWrapper)
         {
             _sQLServerServic = sQLServerServic;
-            _iQueryRepository = iQueryRepository;
-        }
-
-        public List<Query> FilterOutNewSQLServerRequests()
-        {
-            throw new NotImplementedException();
+            _repositoryWrapper = repositoryWrapper;
         }
 
         private List<Query> GetCompletedQuery(DateTime timeToAsk)
@@ -31,53 +27,53 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
             return _sQLServerServic.GetQueriesFromSQLServer(timeToAsk);
         }
 
-        //public List<Query> FilterOutNewSQLServerRequests()
-        //{
-        //    //Фильтруем новые запросы на сервере SQL и сохраняем в БД
-        //    var newQueries = new List<Query>();
+        public List<Query> FilterOutNewSQLServerRequests()
+        {
+            //Фильтруем новые запросы на сервере SQL и сохраняем в БД
+            var newQueries = new List<Query>();
 
-        //    DateTime regDate = DateTime.Now;
-        //    regDate = regDate.AddMinutes(-1);// время запросов выполненых минуту назад 
+            DateTime regDate = DateTime.Now;
+            regDate = regDate.AddMinutes(-1);// время запросов выполненых минуту назад 
 
-        //    var serverQueries = GetCompletedQuery(regDate);// получить запросы ссервера
-        //    //var dbQueries = _iQueryRepository.GetAll().Result;// получить запросы из БД
+            var serverQueries = GetCompletedQuery(regDate);// получить запросы ссервера
+            var dbQueries = _repositoryWrapper.Query.GetAll().Result;// получить запросы из БД
 
-        //    if (dbQueries.Count == 0)
-        //    {
-        //        AddNewQueriesToBatabase(serverQueries);
+            if (dbQueries.Count == 0)
+            {
+                AddNewQueriesToBatabase(serverQueries);
 
-        //        return serverQueries;
-        //    }
-        //    else
-        //    {
+                return serverQueries;
+            }
+            else
+            {
 
-        //        // Перебираем serverQueries, проверяем еть ли он в БД
-        //        foreach (Query sQ in serverQueries)
-        //        {
-        //            int index = dbQueries.FindIndex(dbQ => IdenticalRequests(sQ, dbQ));
+                // Перебираем serverQueries, проверяем еть ли он в БД
+                foreach (Query sQ in serverQueries)
+                {
+                    int index = dbQueries.FindIndex(dbQ => IdenticalRequests(sQ, dbQ));
 
-        //            if (index == -1)
-        //            {
-        //                newQueries.Add(sQ);
-        //            }
-        //        }
+                    if (index == -1)
+                    {
+                        newQueries.Add(sQ);
+                    }
+                }
 
-        //        AddNewQueriesToBatabase(newQueries);
+                AddNewQueriesToBatabase(newQueries);
 
-        //        return newQueries;
-        //    }
-        //}
+                return newQueries;
+            }
+        }
 
-        //private void AddNewQueriesToBatabase(List<Query> newQueries)
-        //{
-        //    if (newQueries.Count != 0)
-        //    {
-        //        foreach (Query query in newQueries)
-        //        {
-        //            _iQueryRepository.AddQuery(query);
-        //        }
-        //    }
-        //}
+        private void AddNewQueriesToBatabase(List<Query> newQueries)
+        {
+            if (newQueries.Count != 0)
+            {
+                foreach (Query query in newQueries)
+                {
+                    _repositoryWrapper.Query.Add(query);
+                }
+            }
+        }
 
         private bool IdenticalRequests(Query sQ, Query dbQ)
         {

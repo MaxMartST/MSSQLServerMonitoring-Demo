@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MSSQLServerMonitoring.Connector\MSSQLServerMonitoring.Connector.csproj" />
     <ProjectReference Include="..\MSSQLServerMonitoring.Domain\MSSQLServerMonitoring.Domain.csproj" />
+    <ProjectReference Include="..\MSSQLServerMonitoring.Infrastructure\MSSQLServerMonitoring.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
