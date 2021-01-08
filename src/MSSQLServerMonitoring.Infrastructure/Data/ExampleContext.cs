@@ -34,7 +34,7 @@ namespace MSSQLServerMonitoring.Infrastructure.Data
         public DbSet<User> User { get; set; }
         public DbSet<Group> Group { get; set; }
         public DbSet<Query> Query { get; set; }
-
+        public DbSet<Query> Alert { get; set; }
 
         protected override void OnModelCreating( ModelBuilder builder )
         {
@@ -44,6 +44,7 @@ namespace MSSQLServerMonitoring.Infrastructure.Data
             builder.ApplyConfiguration( new UserGroupMap() );
             builder.ApplyConfiguration( new GroupMap() );
             builder.ApplyConfiguration(new QueryMap() );
+            builder.ApplyConfiguration(new AlertMap());
 
             foreach ( var property in builder.Model.GetEntityTypes().SelectMany( t => t.GetProperties() ) )
             {

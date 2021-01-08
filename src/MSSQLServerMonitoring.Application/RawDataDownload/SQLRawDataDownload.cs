@@ -46,7 +46,6 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
             }
             else
             {
-
                 // Перебираем serverQueries, проверяем еть ли он в БД
                 foreach (Query sQ in serverQueries)
                 {
@@ -72,6 +71,8 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
                 {
                     _repositoryWrapper.Query.Add(query);
                 }
+
+                _repositoryWrapper.Save();
             }
         }
 
@@ -81,7 +82,6 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
             {
                 return true;
             }
-            //if (sQ.SqlText == dbQ.SqlText && sQ.DatabaseId == )
 
             return false;
         }
