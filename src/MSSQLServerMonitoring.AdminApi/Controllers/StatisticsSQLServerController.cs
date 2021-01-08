@@ -12,7 +12,6 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
     public class StatisticsSQLServerController : Controller
     {
         private readonly SQLRawDataDownload _sQLRawDataDownload;
-        //private readonly ISQLRawDataDownload _sQLRawDataDownload;
         private readonly IEventBufferRepository _eventBufferRepository;
         public StatisticsSQLServerController(SQLRawDataDownload sQLRawDataDownload, IEventBufferRepository eventBufferRepository)
         {
@@ -22,7 +21,6 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
         }
         public List<Query> GetServerStatistics()
         {
-            // Фильтруем запросы EventList, сохраняем только новые
             return _sQLRawDataDownload.FilterOutNewSQLServerRequests();
         }
 

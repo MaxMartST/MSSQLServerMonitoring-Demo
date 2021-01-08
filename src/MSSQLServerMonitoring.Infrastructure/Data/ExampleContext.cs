@@ -44,7 +44,7 @@ namespace MSSQLServerMonitoring.Infrastructure.Data
             builder.ApplyConfiguration( new UserGroupMap() );
             builder.ApplyConfiguration( new GroupMap() );
             builder.ApplyConfiguration(new QueryMap() );
-            builder.ApplyConfiguration(new AlertMap());
+            builder.ApplyConfiguration(new AlertMap() );
 
             foreach ( var property in builder.Model.GetEntityTypes().SelectMany( t => t.GetProperties() ) )
             {

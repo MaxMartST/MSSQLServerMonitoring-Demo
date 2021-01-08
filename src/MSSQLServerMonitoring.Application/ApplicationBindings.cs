@@ -1,6 +1,7 @@
 using MSSQLServerMonitoring.Application.Calculator;
 using Microsoft.Extensions.DependencyInjection;
 using MSSQLServerMonitoring.Application.RawDataDownload;
+using MSSQLServerMonitoring.Application.ProcessedDataAnalyzing;
 
 namespace MSSQLServerMonitoring.Application
 {
@@ -10,6 +11,7 @@ namespace MSSQLServerMonitoring.Application
         {
             services.AddScoped<ICalculator, Calculator.Calculator>();
             services.AddScoped<SQLRawDataDownload>();
+            services.AddScoped<SQLProcessedDataAnalyzing>();
 
             return services;
         }

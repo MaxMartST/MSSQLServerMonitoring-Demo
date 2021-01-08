@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MSSQLServerMonitoring.Application.RawDataDownload
 {
-    public class SQLRawDataDownload 
+    public class SQLRawDataDownload : ISQLRawDataDownload
     {
         // логика приложения получить сырые данные по событиям и сохранить анамальные запросы
         ISQLServerService _sQLServerServic;
@@ -21,9 +21,6 @@ namespace MSSQLServerMonitoring.Application.RawDataDownload
 
         private List<Query> GetCompletedQuery(DateTime timeToAsk)
         {
-            //List<EventMSSQLServer> ventMSSQLServers = //new List<EventMSSQLServer>();
-            //ventMSSQLServers = _sQLServerServic.GetEventsFromSession();
-
             return _sQLServerServic.GetQueriesFromSQLServer(timeToAsk);
         }
 
