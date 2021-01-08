@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MSSQLServerMonitoring.Domain.QueryModel
+namespace MSSQLServerMonitoring.Domain.Model
 {
     public class Query : Entity, IAggregateRoot
     {

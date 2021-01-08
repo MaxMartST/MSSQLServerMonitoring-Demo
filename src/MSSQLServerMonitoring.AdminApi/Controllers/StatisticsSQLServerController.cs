@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MSSQLServerMonitoring.Application.RawDataDownload;
-using MSSQLServerMonitoring.Domain.QueryModel;
+using MSSQLServerMonitoring.Domain.Model;
 using MSSQLServerMonitoring.Hangfire.EventBuffer;
 using System;
 using System.Collections.Generic;

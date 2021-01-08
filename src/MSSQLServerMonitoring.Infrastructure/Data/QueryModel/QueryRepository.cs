@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MSSQLServerMonitoring.Domain.QueryModel;
+using MSSQLServerMonitoring.Domain.Model;
+using MSSQLServerMonitoring.Infrastructure.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,32 +8,10 @@ using System.Threading.Tasks;
 
 namespace MSSQLServerMonitoring.Infrastructure.Data.QueryModel
 {
-    public class QueryRepository : IQueryRepository
+    public class QueryRepository : RepositoryBase<Query>, IQueryRepository
     {
-        private readonly ExampleContext _ctx;
-
-        public QueryRepository(ExampleContext ctx)
+        public QueryRepository(ExampleContext ctx) : base(ctx)
         {
-            _ctx = ctx;
-        }
-        public Task AddQuery(Query query)
-        {
-            _ctx.Query.Add(query);
-            _ctx.SaveChanges();
-
-            return Task.CompletedTask;
-        }
-
-        public Task<List<Query>> GetAll()
-        {
-            return _ctx.Query.ToListAsync();
-        }
-
-        public Task UpdateQuery(Query query)
-        {
-            _ctx.Update(query);
-
-            return Task.CompletedTask;
         }
     }
 }

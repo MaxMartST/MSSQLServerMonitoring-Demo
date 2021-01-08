@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MSSQLServerMonitoring.Domain.QueryModel;
+using MSSQLServerMonitoring.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;

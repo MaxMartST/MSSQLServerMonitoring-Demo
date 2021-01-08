@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MSSQLServerMonitoring.Application.RawDataDownload;
 using MSSQLServerMonitoring.Connector.Model;
-using MSSQLServerMonitoring.Domain.QueryModel;
+using MSSQLServerMonitoring.Domain.Model;
+using MSSQLServerMonitoring.Infrastructure.Wrapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,30 +14,30 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
     [ApiController]
     public class QuerySQLServerController : ControllerBase
     {
-        private readonly IQueryRepository _iQueryRepository;
+        private IRepositoryWrapper _repositoryWrapper;
 
-        public QuerySQLServerController(IQueryRepository iQueryRepository)
+        public QuerySQLServerController(IRepositoryWrapper repositoryWrapper)
         {
-            _iQueryRepository = iQueryRepository;
+            _repositoryWrapper = repositoryWrapper;
         }
 
         // GET: api/<ValuesController 
         [HttpGet]
         public async Task<List<Query>> ListAll()
         {
-            List<Query> requests = await _iQueryRepository.GetAll();
+            List<Query> requests = await _repositoryWrapper.Query.GetAll();
 
             return requests;
         }
 
-        // GET api/<ValuesController>/5
+        //GET api/<ValuesController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<ValuesController>
+        //POST api/<ValuesController>
         [HttpPost]
         public void Post([FromBody] string value)
         {

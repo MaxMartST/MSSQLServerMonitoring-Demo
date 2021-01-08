@@ -10,7 +10,7 @@ using MSSQLServerMonitoring.Infrastructure.Data.UserModel.EntityConfigurations;
 using MSSQLServerMonitoring.Infrastructure.Data.QueryModel.EntityConfigurations;
 using MSSQLServerMonitoring.Domain.Toolkit.Domain.Abstractions;
 using MSSQLServerMonitoring.Infrastructure.Clock;
-using MSSQLServerMonitoring.Domain.QueryModel;
+using MSSQLServerMonitoring.Domain.Model;
 
 namespace MSSQLServerMonitoring.Infrastructure.Data
 {

@@ -14,6 +14,7 @@ using MSSQLServerMonitoring.Connector;
 using MSSQLServerMonitoring.Hangfire;
 using Microsoft.AspNetCore.Http;
 using MSSQLServerMonitoring.Infrastructure.Procedure;
+using MSSQLServerMonitoring.Infrastructure.Wrapper;
 
 namespace MSSQLServerMonitoring.AdminApi
 {
@@ -43,7 +44,7 @@ namespace MSSQLServerMonitoring.AdminApi
                 .AddBaseServices()
                 .AddApplication()
                 .AddVersioning( 1, 0 )
-                //.AddMSSQLServerConnector(Configuration.GetSection("ConnectionStrings:ExampleConnection").Get<ConfigureMSSQLServerConnectorComponent>())
+                .AddWrapper()
                 .AddMSSQLServerConnector(new ConfigureMSSQLServerConnectorComponent { BaseApiUrl = Configuration.GetConnectionString("MonitorConnection") })
                 .AddAdupter()
                 .AddEventBuffer()

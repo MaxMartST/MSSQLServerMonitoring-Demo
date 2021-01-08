@@ -2,7 +2,7 @@
 using MSSQLServerMonitoring.Application.RawDataDownload;
 using MSSQLServerMonitoring.Connector.Model;
 using MSSQLServerMonitoring.Connector.Services;
-using MSSQLServerMonitoring.Domain.QueryModel;
+using MSSQLServerMonitoring.Domain.Model;
 using MSSQLServerMonitoring.Hangfire.Mappers;
 using System;
 using System.Collections.Generic;
