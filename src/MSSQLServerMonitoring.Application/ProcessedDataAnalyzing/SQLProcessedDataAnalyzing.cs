@@ -10,6 +10,7 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
     public class SQLProcessedDataAnalyzing : ISQLProcessedDataAnalyzing
     {
         IRepositoryWrapper _repositoryWrapper;
+        public double percent = 10;
         public SQLProcessedDataAnalyzing(IRepositoryWrapper repositoryWrapper)
         {
             _repositoryWrapper = repositoryWrapper;
@@ -35,27 +36,60 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
         private void ArithmeticMeanAnalysis(IGrouping<string, Query> queries)
         {
             // Анализируем полученные запросы на среднее - Анализ среднего по
-            // Duration
-            // LogicalReads
-            // Writes
+            long AverageLogicalReads = 0, AverageWrites = 0, count = queries.Count();
+            decimal AverageDuration = 0;
 
-            long average = 0;
             foreach (Query query in queries)
             {
-                average += query.LogicalReads;
+                AverageLogicalReads += query.LogicalReads;
+                AverageWrites += query.Writes;
+                AverageDuration += query.Duration;
             }
-            average /= queries.Count();
 
-            double coefficient = average * 1.1;
-            var alertList = new List<Alert>();
+            AverageLogicalReads /= count;
+            AverageWrites /= count;
+            AverageDuration /= count;
+
+            double coefficient = (percent + 100) / 100;
+            double coeffLogicalReads = AverageLogicalReads * coefficient;
+            double coeffWrites = AverageWrites * coefficient;
+            decimal coeffDuration = AverageDuration * (decimal)coefficient;
+
             foreach (Query query in queries)
             {
-                if (query.LogicalReads > coefficient)
+                // LogicalReads
+                if (query.LogicalReads > coeffLogicalReads)
                 {
-                    //alertList.Add();
-                    Console.WriteLine(query.AttachActivityId);
+                    GenerateAlert(query, "LogicalReads");
+                }
+                // Writes
+                if (query.Writes > coeffWrites)
+                {
+                    GenerateAlert(query, "Writes");
+                }
+                // Duration
+                if (query.Duration > coeffDuration)
+                {
+                    GenerateAlert(query, "Duration");
                 }
             }
+        }
+
+        private void GenerateAlert(Query query, string message)
+        {
+            Alert alert = new Alert(
+                query.SqlText, 
+                $"Значение {message} привышает {percent} процентов от нормы", 
+                query.AttachActivityId
+            );
+            alert.RegDate = DateTime.Now;
+
+            Console.WriteLine(alert.AttachActivityId);
+            Console.WriteLine(alert.TimeStamp);
+            Console.WriteLine(alert.SqlText);
+            Console.WriteLine(alert.Message);
+            Console.WriteLine();
+            //_repositoryWrapper.Alert.Add(alert);
         }
     }
 }

@@ -11,5 +11,24 @@ namespace MSSQLServerMonitoring.Domain.Model
         public string AttachActivityId { get; set; }
         public string SqlText { get; set; }
         public string Message { get; set; }
+        public Alert(string sqlText, string message, string attachActivityId)
+        {
+            AttachActivityId = attachActivityId;
+            SqlText = sqlText;
+            Message = message;
+        }
+
+        public DateTime RegDate
+        {
+            get
+            {
+                return TimeStamp;
+            }
+
+            set
+            {
+                TimeStamp = value;
+            }
+        }
     }
 }
