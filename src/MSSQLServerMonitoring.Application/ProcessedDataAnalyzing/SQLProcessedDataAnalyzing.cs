@@ -75,17 +75,17 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
                 // LogicalReads
                 if (query.LogicalReads > coeffLogicalReads)
                 {
-                    GenerateAlert(query, "LogicalReads");
+                    GenerateAlert(query, $"Значение LogicalReads привышает {percent} процентов от нормы");
                 }
                 // Writes
                 if (query.Writes > coeffWrites)
                 {
-                    GenerateAlert(query, "Writes");
+                    GenerateAlert(query, $"Значение Writes привышает {percent} процентов от нормы");
                 }
                 // Duration
                 if (query.Duration > coeffDuration)
                 {
-                    GenerateAlert(query, "Duration");
+                    GenerateAlert(query, $"Значение Duration привышает {percent} процентов от нормы");
                 }
             }
         }
@@ -93,19 +93,24 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
         private void MethodLeastSquares(IGrouping<string, Query> queries, DateTime date)
         {
             DateTime yesterdayDate = date.AddDays(-1);
-            List<Query> todayListQueries = _repositoryWrapper.Query.GetOnCondition(q => q.TimeStamp >= yesterdayDate && q.TimeStamp < date && q.SqlText == queries.Key).Result;
-            long node = todayListQueries.Count;
+            List<Query> yesterdayListQueries = _repositoryWrapper.Query.GetOnCondition(q => q.TimeStamp >= yesterdayDate && q.TimeStamp < date && q.SqlText == queries.Key).Result;
+            long node = yesterdayListQueries.Count;
 
             if (node != 0)
             {
                 double[,] data;
-                data = GetData(node, todayListQueries);
+                data = GetData(node, yesterdayListQueries);
                 Coefficient coefficient = GetApprox(data, node);
-                
-                Console.WriteLine("Коэффициенты:");
-                Console.WriteLine($"a = {coefficient.a}");
-                Console.WriteLine($"b = {coefficient.b}");
+                AnalysisByApproximationFunction(coefficient, queries, yesterdayListQueries);
+                //Console.WriteLine("Коэффициенты:");
+                //Console.WriteLine($"a = {coefficient.a}");
+                //Console.WriteLine($"b = {coefficient.b}");
             }
+        }
+        private void AnalysisByApproximationFunction(Coefficient coefficient, IGrouping<string, Query> queries, List<Query> yesterdayListQueries)
+        {
+            // Подставляем в формулу с коэффициентами значения запросов, выполненные 1 час назад
+            // Если олученные значения выбиваются от старых, то создаём Alert, если нет, идём дальше
         }
         private double[,] GetData(long node, List<Query> queries)
         {
@@ -124,7 +129,7 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
 
         private double GetSeconds(DateTime time)
         {
-            return time.Minute * 60 + time.Second;
+            return time.Minute * 60 + time.Second + time.Millisecond;
         }
 
         private Coefficient GetApprox(double[,] temp, long node)
@@ -150,8 +155,8 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
         private void GenerateAlert(Query query, string message)
         {
             Alert alert = new Alert(
-                query.SqlText, 
-                $"Значение {message} привышает {percent} процентов от нормы", 
+                query.SqlText,
+                message, 
                 query.AttachActivityId
             );
             alert.RegDate = DateTime.Now;
