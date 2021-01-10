@@ -30,14 +30,14 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
     }
     class Deviation
     {
-        public Deviation(double devLogicalReads, double devWritess, double devDuration)
+        public Deviation(double devLogicalReads, double devWrited, double devDuration)
         {
             deviationLogicalReads = devLogicalReads;
-            deviationWritess = devWritess;
+            deviationWrited = devWrited;
             deviationDuration = devDuration;
         }
         public double deviationLogicalReads = 0;
-        public double deviationWritess = 0;
+        public double deviationWrited = 0;
         public double deviationDuration = 0;
     }
     public class SQLProcessedDataAnalyzing : ISQLProcessedDataAnalyzing
@@ -127,30 +127,42 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
                 Coefficient coefficient = GetApprox(data, node);
                 List<Query> todayListQueries = GetListQueries(queries);
                 AnalysisByApproximationFunction(coefficient, todayListQueries, yesterdayListQueries);
-
-                //Console.WriteLine("Коэффициенты:");
-                //Console.WriteLine($"a = {coefficient.a}");
-                //Console.WriteLine($"b = {coefficient.b}");
             }
         }
         private void AnalysisByApproximationFunction(Coefficient coefficient, List<Query> todayListQueries, List<Query> yesterdayListQueries)
         {
-            double interestRate = (percent + 100) / 100;
-            // Подставляем в формулу с коэффициентами значения запросов, выполненные 1 час назад
-            // Если олученные значения выбиваются от старых, то создаём Alert, если нет, идём дальше
-            //double sumSquaresDeviationYesterday = GetSumSquaresDeviations(coefficient, yesterdayListQueries);
-            Deviation DeviationYesterday = GetSumSquaresDeviations(coefficient, yesterdayListQueries);
-            //double sumSquaresDeviationToday = GetSumSquaresDeviations(coefficient, todayListQueries);
-            Deviation DeviationToday = GetSumSquaresDeviations(coefficient, todayListQueries);
+            Deviation deviationYesterday = GetSumSquaresDeviations(coefficient, yesterdayListQueries);
+            Deviation deviationToday = GetSumSquaresDeviations(coefficient, todayListQueries);
 
-            Console.WriteLine("Коэффициенты:");
-            //if (sumSquaresDeviationToday > (sumSquaresDeviationYesterday * interestRate))
-            //{
-            //    foreach (Query query in todayListQueries)
-            //    {
-            //        GenerateAlert(query, $"Запрос привышает допустимое отклонение в {sumSquaresDeviationYesterday} по значениею LogicalReads");
-            //    }
-            //}
+            if (CompareDeviations(deviationYesterday.deviationLogicalReads, deviationToday.deviationLogicalReads))
+            {
+                foreach (Query query in todayListQueries)
+                {
+                    GenerateAlert(query, $"Запрос привышает допустимое отклонение в {deviationYesterday.deviationLogicalReads} по значениею LogicalReads");
+                }
+            }
+
+            if (CompareDeviations(deviationYesterday.deviationWrited, deviationToday.deviationWrited))
+            {
+                foreach (Query query in todayListQueries)
+                {
+                    GenerateAlert(query, $"Запрос привышает допустимое отклонение в {deviationYesterday.deviationWrited} по значениею Writed");
+                }
+            }
+
+            if (CompareDeviations(deviationYesterday.deviationDuration, deviationToday.deviationDuration))
+            {
+                foreach (Query query in todayListQueries)
+                {
+                    GenerateAlert(query, $"Запрос привышает допустимое отклонение в {deviationYesterday.deviationDuration} по значениею Duration");
+                }
+            }
+        }
+        private bool CompareDeviations(double deviationYesterday, double deviationToday)
+        {
+            double interestRate = (percent + 100) / 100;
+
+            return (deviationToday > (deviationYesterday * interestRate));
         }
         private double[,] GetData(long node, List<Query> queries)
         {
@@ -238,7 +250,7 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
                 sumDeviationW += GetSumDeviation(coefficient._WritesA, coefficient._WritesB, x, query.Writes);
 
                 // Duration
-                sumDeviationD += sumDeviationW += GetSumDeviation(coefficient._DurationA, coefficient._DurationB, x, (double)query.Duration);
+                sumDeviationD += GetSumDeviation(coefficient._DurationA, coefficient._DurationB, x, (double)query.Duration);
             }
 
             return new Deviation(sumDeviationLR, sumDeviationW, sumDeviationD);
