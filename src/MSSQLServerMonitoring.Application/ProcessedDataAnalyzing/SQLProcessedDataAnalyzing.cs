@@ -21,6 +21,7 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
     {
         IRepositoryWrapper _repositoryWrapper;
         public double percent = 10;
+        private int numberParameters = 4;
         public SQLProcessedDataAnalyzing(IRepositoryWrapper repositoryWrapper)
         {
             _repositoryWrapper = repositoryWrapper;
@@ -103,6 +104,7 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
                 Coefficient coefficient = GetApprox(data, node);
                 List<Query> todayListQueries = GetListQueries(queries);
                 AnalysisByApproximationFunction(coefficient, todayListQueries, yesterdayListQueries);
+
                 //Console.WriteLine("Коэффициенты:");
                 //Console.WriteLine($"a = {coefficient.a}");
                 //Console.WriteLine($"b = {coefficient.b}");
@@ -129,8 +131,8 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
             long i = 0;
             foreach (var query in queries)
             {
-                temp[0, i] = query.LogicalReads;
-                temp[1, i] = GetSeconds(query.TimeStamp);
+                temp[0, i] = GetSeconds(query.TimeStamp);
+                temp[1, i] = query.LogicalReads;
 
                 i++;
             }
