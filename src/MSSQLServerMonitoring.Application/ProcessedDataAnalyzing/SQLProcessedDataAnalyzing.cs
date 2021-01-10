@@ -9,13 +9,36 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
 {
     class Coefficient
     {
-        public Coefficient(double value1, double value2)
+        public Coefficient(
+            double logicalReadsA,
+            double logicalReadsB,
+            double WritesA,
+            double WritesB,
+            double DurationA,
+            double DurationB)
         {
-            a = value1;
-            b = value2;
+            _logicalReadsA = logicalReadsA;
+            _logicalReadsB = logicalReadsB;
+            _WritesA = WritesA;
+            _WritesB = WritesB;
+            _DurationA = DurationA;
+            _DurationB = DurationB;
         }
-
-        public double a = 0, b = 0;
+        public double _logicalReadsA = 0, _logicalReadsB = 0;
+        public double _WritesA = 0, _WritesB = 0;
+        public double _DurationA = 0, _DurationB = 0;
+    }
+    class Deviation
+    {
+        public Deviation(double devLogicalReads, double devWritess, double devDuration)
+        {
+            deviationLogicalReads = devLogicalReads;
+            deviationWritess = devWritess;
+            deviationDuration = devDuration;
+        }
+        public double deviationLogicalReads = 0;
+        public double deviationWritess = 0;
+        public double deviationDuration = 0;
     }
     public class SQLProcessedDataAnalyzing : ISQLProcessedDataAnalyzing
     {
@@ -115,25 +138,30 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
             double interestRate = (percent + 100) / 100;
             // Подставляем в формулу с коэффициентами значения запросов, выполненные 1 час назад
             // Если олученные значения выбиваются от старых, то создаём Alert, если нет, идём дальше
-            double sumSquaresDeviationYesterday = GetSumSquaresDeviations(coefficient, yesterdayListQueries);
-            double sumSquaresDeviationToday = GetSumSquaresDeviations(coefficient, todayListQueries);
+            //double sumSquaresDeviationYesterday = GetSumSquaresDeviations(coefficient, yesterdayListQueries);
+            Deviation DeviationYesterday = GetSumSquaresDeviations(coefficient, yesterdayListQueries);
+            //double sumSquaresDeviationToday = GetSumSquaresDeviations(coefficient, todayListQueries);
+            Deviation DeviationToday = GetSumSquaresDeviations(coefficient, todayListQueries);
 
-            if (sumSquaresDeviationToday > (sumSquaresDeviationYesterday * interestRate))
-            {
-                foreach (Query query in todayListQueries)
-                {
-                    GenerateAlert(query, $"Запрос привышает допустимое отклонение в {sumSquaresDeviationYesterday} по значениею LogicalReads");
-                }
-            }
+            Console.WriteLine("Коэффициенты:");
+            //if (sumSquaresDeviationToday > (sumSquaresDeviationYesterday * interestRate))
+            //{
+            //    foreach (Query query in todayListQueries)
+            //    {
+            //        GenerateAlert(query, $"Запрос привышает допустимое отклонение в {sumSquaresDeviationYesterday} по значениею LogicalReads");
+            //    }
+            //}
         }
         private double[,] GetData(long node, List<Query> queries)
         {
-            double[,] temp = new double[2, node];
+            double[,] temp = new double[numberParameters, node];
             long i = 0;
             foreach (var query in queries)
             {
-                temp[0, i] = GetSeconds(query.TimeStamp);
-                temp[1, i] = query.LogicalReads;
+                temp[0, i] = GetSeconds(query.TimeStamp);// x
+                temp[1, i] = query.LogicalReads;// y
+                temp[2, i] = query.Writes;// z
+                temp[3, i] = (double)query.Duration;// t
 
                 i++;
             }
@@ -148,40 +176,82 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
 
         private Coefficient GetApprox(double[,] temp, long node)
         {
-            double sumx = 0;
-            double sumy = 0;
-            double sumx2 = 0;
-            double sumxy = 0;
+            //double sumx = 0;
+            //double sumy = 0;
+            //double sumx2 = 0;
+            //double sumxy = 0;
+            double sumTimeStamp = 0;// x
+            double sumTimeStamp2 = 0;// x * x
+            double sumLogicalReads = 0;// y
+            double sumTimeStampOnLogicalReads = 0;// x * y
+            double sumWrites = 0;// z
+            double sumTimeStampOnWrites = 0;// x * z
+            double sumDuration = 0;// t
+            double sumTimeStampOnDuration = 0;// x * t
 
             for (int i = 0; i < node; i++)
             {
-                sumx += temp[0, i];
-                sumy += temp[1, i];
-                sumx2 += temp[0, i] * temp[0, i];
-                sumxy += temp[0, i] * temp[1, i];
-            }
-            double a = (node * sumxy - (sumx * sumy)) / (node * sumx2 - sumx * sumx);
-            double b = (sumy - a * sumx) / node;
+                //sumx += temp[0, i];
+                //sumx2 += temp[0, i] * temp[0, i];
+                //sumy += temp[1, i];
+                //sumxy += temp[0, i] * temp[1, i];
 
-            return new Coefficient(a, b);
+                sumTimeStamp += temp[0, i];
+                sumTimeStamp2 += temp[0, i] * temp[0, i];
+
+                sumLogicalReads += temp[1, i];
+                sumTimeStampOnLogicalReads += temp[0, i] * temp[1, i];
+
+                sumWrites += temp[2, i];
+                sumTimeStampOnWrites += temp[0, i] * temp[2, i];
+
+                sumDuration += temp[3, i];
+                sumTimeStampOnDuration += temp[0, i] * temp[3, i];
+            }
+
+            double logicalReadsA = (node * sumTimeStampOnLogicalReads - (sumTimeStamp * sumLogicalReads)) / (node * sumTimeStamp2 - sumTimeStamp * sumTimeStamp);
+            double logicalReadsB = (sumLogicalReads - logicalReadsA * sumTimeStamp) / node;
+            
+            double WritesA = (node * sumTimeStampOnWrites - (sumTimeStamp * sumWrites)) / (node * sumTimeStamp2 - sumTimeStamp * sumTimeStamp);
+            double WritesB = (sumWrites - WritesA * sumTimeStamp) / node;
+
+            double DurationA = (node * sumTimeStampOnDuration - (sumTimeStamp * sumDuration)) / (node * sumTimeStamp2 - sumTimeStamp * sumTimeStamp);
+            double DurationB = (sumWrites - DurationA * sumTimeStamp) / node;
+
+            return new Coefficient(logicalReadsA, logicalReadsB, WritesA, WritesB, DurationA, DurationB);
         }
 
-        private double GetSumSquaresDeviations(Coefficient coefficient, List<Query> queries)
+        private Deviation GetSumSquaresDeviations(Coefficient coefficient, List<Query> queries)
         {
-            double sum = 0;
-            double[,] temp = new double[2, queries.Count];
-            long i = 0;
+            double sumDeviationLR = 0;
+            double sumDeviationW = 0;
+            double sumDeviationD = 0;
+
             foreach (var query in queries)
             {
-                temp[0, i] = coefficient.a * GetSeconds(query.TimeStamp) + coefficient.b;
-                double value = query.LogicalReads - temp[0, i];
-                temp[1, i] = value * value;
-                sum += temp[1, i];
+                double x = GetSeconds(query.TimeStamp);
 
-                i++;
+                // LogicalReads
+                sumDeviationLR += GetSumDeviation(coefficient._logicalReadsA, coefficient._logicalReadsB, x, query.LogicalReads);
+
+                // Writes
+                sumDeviationW += GetSumDeviation(coefficient._WritesA, coefficient._WritesB, x, query.Writes);
+
+                // Duration
+                sumDeviationD += sumDeviationW += GetSumDeviation(coefficient._DurationA, coefficient._DurationB, x, (double)query.Duration);
             }
 
-            return sum;
+            return new Deviation(sumDeviationLR, sumDeviationW, sumDeviationD);
+        }
+        private double GetSumDeviation(double coefficientA, double coefficientB, double x, double y)
+        {
+            double temp = 0, value = 0;
+
+            temp = coefficientA * x + coefficientB;
+            value = y - temp;
+            temp = value * value;
+
+            return temp;
         }
 
         private void GenerateAlert(Query query, string message)
