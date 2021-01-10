@@ -112,12 +112,13 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
         }
         private void AnalysisByApproximationFunction(Coefficient coefficient, List<Query> todayListQueries, List<Query> yesterdayListQueries)
         {
+            double interestRate = (percent + 100) / 100;
             // Подставляем в формулу с коэффициентами значения запросов, выполненные 1 час назад
             // Если олученные значения выбиваются от старых, то создаём Alert, если нет, идём дальше
             double sumSquaresDeviationYesterday = GetSumSquaresDeviations(coefficient, yesterdayListQueries);
             double sumSquaresDeviationToday = GetSumSquaresDeviations(coefficient, todayListQueries);
 
-            if (sumSquaresDeviationToday > sumSquaresDeviationYesterday)
+            if (sumSquaresDeviationToday > (sumSquaresDeviationYesterday * interestRate))
             {
                 foreach (Query query in todayListQueries)
                 {
