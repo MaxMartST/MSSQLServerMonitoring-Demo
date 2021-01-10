@@ -101,16 +101,27 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
                 double[,] data;
                 data = GetData(node, yesterdayListQueries);
                 Coefficient coefficient = GetApprox(data, node);
-                AnalysisByApproximationFunction(coefficient, queries, yesterdayListQueries);
+                List<Query> todayListQueries = GetListQueries(queries);
+                AnalysisByApproximationFunction(coefficient, todayListQueries, yesterdayListQueries);
                 //Console.WriteLine("Коэффициенты:");
                 //Console.WriteLine($"a = {coefficient.a}");
                 //Console.WriteLine($"b = {coefficient.b}");
             }
         }
-        private void AnalysisByApproximationFunction(Coefficient coefficient, IGrouping<string, Query> queries, List<Query> yesterdayListQueries)
+        private void AnalysisByApproximationFunction(Coefficient coefficient, List<Query> todayListQueries, List<Query> yesterdayListQueries)
         {
             // Подставляем в формулу с коэффициентами значения запросов, выполненные 1 час назад
             // Если олученные значения выбиваются от старых, то создаём Alert, если нет, идём дальше
+            double sumSquaresDeviationYesterday = GetSumSquaresDeviations(coefficient, yesterdayListQueries);
+            double sumSquaresDeviationToday = GetSumSquaresDeviations(coefficient, todayListQueries);
+
+            if (sumSquaresDeviationToday > sumSquaresDeviationYesterday)
+            {
+                foreach (Query query in todayListQueries)
+                {
+                    GenerateAlert(query, $"Запрос привышает допустимое отклонение в {sumSquaresDeviationYesterday} по значениею LogicalReads");
+                }
+            }
         }
         private double[,] GetData(long node, List<Query> queries)
         {
@@ -152,6 +163,24 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
             return new Coefficient(a, b);
         }
 
+        private double GetSumSquaresDeviations(Coefficient coefficient, List<Query> queries)
+        {
+            double sum = 0;
+            double[,] temp = new double[2, queries.Count];
+            long i = 0;
+            foreach (var query in queries)
+            {
+                temp[0, i] = coefficient.a * GetSeconds(query.TimeStamp) + coefficient.b;
+                double value = query.LogicalReads - temp[0, i];
+                temp[1, i] = value * value;
+                sum += temp[1, i];
+
+                i++;
+            }
+
+            return sum;
+        }
+
         private void GenerateAlert(Query query, string message)
         {
             Alert alert = new Alert(
@@ -167,6 +196,17 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
             Console.WriteLine(alert.Message);
             Console.WriteLine();
             //_repositoryWrapper.Alert.Add(alert);
+        }
+        private List<Query> GetListQueries(IGrouping<string, Query> queries)
+        {
+            List<Query> newListQueries = new List<Query>();
+
+            foreach (Query query in queries)
+            {
+                newListQueries.Add(query);
+            }
+
+            return newListQueries;
         }
     }
 }
