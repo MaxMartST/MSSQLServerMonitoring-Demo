@@ -11,6 +11,9 @@ using MSSQLServerMonitoring.Infrastructure.Data.QueryModel.EntityConfigurations;
 using MSSQLServerMonitoring.Domain.Toolkit.Domain.Abstractions;
 using MSSQLServerMonitoring.Infrastructure.Clock;
 using MSSQLServerMonitoring.Domain.QueryModel;
+using MSSQLServerMonitoring.Domain.HangFireModel;
+using MSSQLServerMonitoring.Infrastructure.Data.HangFireModel.EntityConfigurations;
+using MSSQLServerMonitoring.Infrastructure.Data.HangFireModel;
 
 namespace MSSQLServerMonitoring.Infrastructure.Data
 {
@@ -30,12 +33,10 @@ namespace MSSQLServerMonitoring.Infrastructure.Data
         {
         }
 
-
         public DbSet<User> User { get; set; }
         public DbSet<Group> Group { get; set; }
         public DbSet<Query> Query { get; set; }
-
-
+        public DbSet<HangFireCounter> HangFireCounter { get; set; }
         protected override void OnModelCreating( ModelBuilder builder )
         {
             base.OnModelCreating( builder );
@@ -43,7 +44,9 @@ namespace MSSQLServerMonitoring.Infrastructure.Data
             builder.ApplyConfiguration( new UserMap() );
             builder.ApplyConfiguration( new UserGroupMap() );
             builder.ApplyConfiguration( new GroupMap() );
-            builder.ApplyConfiguration(new QueryMap() );
+            builder.ApplyConfiguration( new QueryMap() );
+            builder.ApplyConfiguration( new HangFireCounterMap() );
+            builder.Seed();
 
             foreach ( var property in builder.Model.GetEntityTypes().SelectMany( t => t.GetProperties() ) )
             {

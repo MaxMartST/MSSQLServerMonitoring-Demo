@@ -1,6 +1,6 @@
 ﻿using MSSQLServerMonitoring.Application.RawDataDownload;
+using MSSQLServerMonitoring.Domain.HangFireModel;
 using MSSQLServerMonitoring.Hangfire.EventBuffer;
-using MSSQLServerMonitoring.HangFire.HangfireCounter;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,28 +10,34 @@ namespace MSSQLServerMonitoring.HangFire.HangFire
 {
     public class HangFireService : IHangFireService
     {
-        private readonly IHangFireCounter _hangFireCounter;
         private readonly SQLRawDataDownload _sQLRawDataDownload;
         private readonly IEventBufferRepository _eventBufferRepository;
-        public HangFireService(IHangFireCounter hangFireCounter, SQLRawDataDownload sQLRawDataDownload, IEventBufferRepository eventBufferRepository)
+        private readonly IHangFireCounterRepository _hangFireCounterRepository;
+        public HangFireService(SQLRawDataDownload sQLRawDataDownload, IEventBufferRepository eventBufferRepository, IHangFireCounterRepository hangFireCounterRepository)
         {
-            _hangFireCounter = hangFireCounter;
             _sQLRawDataDownload = sQLRawDataDownload;
             _eventBufferRepository = eventBufferRepository;
+            _hangFireCounterRepository = hangFireCounterRepository;
         }
         public async Task RunDemoTask()
         {
-            if (_hangFireCounter.GetCounter() < _hangFireCounter.GetLimit())
+            HangFireCounter hangFireCounter = await _hangFireCounterRepository.GetHangFireCounter();
+
+            if (hangFireCounter.Counter < hangFireCounter.Limit)
             {
-                await _sQLRawDataDownload.FilterOutNewSQLServerRequests();
-                Console.WriteLine($"MSSQL server is being accessed. Counter: {_hangFireCounter.GetCounter()}, Limit: {_hangFireCounter.GetLimit()}");
-                _hangFireCounter.AddCounter();
+                //await _sQLRawDataDownload.FilterOutNewSQLServerRequests();
+                Console.WriteLine($"MSSQL server is being accessed. Counter: {hangFireCounter.Counter}, Limit: {hangFireCounter.Limit}");
+                hangFireCounter.Counter++;
+
+                await _hangFireCounterRepository.UpdateHangFireCounter(hangFireCounter);
             }
             else
             {
-                await _eventBufferRepository.ClearEventSessionBuffer();
-                Console.WriteLine($"Clearing the event session buffer. Counter: {_hangFireCounter.GetCounter()}, Limit: {_hangFireCounter.GetLimit()}");
-                _hangFireCounter.ResetCounter();
+                //await _eventBufferRepository.ClearEventSessionBuffer();
+                Console.WriteLine($"Clearing the event session buffer. Counter: {hangFireCounter.Counter}, Limit: {hangFireCounter.Limit}");
+                hangFireCounter.Counter = 0;
+
+                await _hangFireCounterRepository.UpdateHangFireCounter(hangFireCounter);
             }
         }
     }

@@ -15,9 +15,8 @@ using MSSQLServerMonitoring.Hangfire;
 using Microsoft.AspNetCore.Http;
 using MSSQLServerMonitoring.Infrastructure.Procedure;
 using Hangfire;
-using MSSQLServerMonitoring.HangFire;
-using MSSQLServerMonitoring.HangFire.HangfireCounter;
 using MSSQLServerMonitoring.HangFire.HangFire;
+using MSSQLServerMonitoring.Infrastructure.Data.HangFireModel;
 
 namespace MSSQLServerMonitoring.AdminApi
 {
@@ -60,10 +59,10 @@ namespace MSSQLServerMonitoring.AdminApi
                 } );
         }
 
-        public virtual void Configure( IApplicationBuilder app )
+        public virtual void Configure( IApplicationBuilder app)
         {
             app.UseMvcWithDefaultRoute();
-
+            app.UseHangfireServer();
         }
 
         public virtual void ConfigureDatabase( IServiceCollection services )
@@ -74,7 +73,6 @@ namespace MSSQLServerMonitoring.AdminApi
         {
             services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("ExampleConnection")));
             services.AddHangfireServer();
-            services.AddHangFireTrafficController(new HangFireCounter { limit = Int32.Parse(Configuration.GetConnectionString("HangFireTrafficController")), counter = 0 });
             services.AddScoped<IHangFireService, HangFireService>();
         }
     }
