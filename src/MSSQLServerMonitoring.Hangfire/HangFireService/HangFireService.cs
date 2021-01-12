@@ -26,7 +26,7 @@ namespace MSSQLServerMonitoring.HangFire.HangFire
             if (hangFireCounter.Counter < hangFireCounter.Limit)
             {
                 //await _sQLRawDataDownload.FilterOutNewSQLServerRequests();
-                Console.WriteLine($"MSSQL server is being accessed. Counter: {hangFireCounter.Counter}, Limit: {hangFireCounter.Limit}");
+                Console.WriteLine($"MSSQL server is being accessed. Counter: {hangFireCounter.Counter}, Limit: {hangFireCounter.Limit}.");
                 hangFireCounter.Counter++;
 
                 await _hangFireCounterRepository.UpdateHangFireCounter(hangFireCounter);
@@ -34,11 +34,15 @@ namespace MSSQLServerMonitoring.HangFire.HangFire
             else
             {
                 //await _eventBufferRepository.ClearEventSessionBuffer();
-                Console.WriteLine($"Clearing the event session buffer. Counter: {hangFireCounter.Counter}, Limit: {hangFireCounter.Limit}");
+                Console.WriteLine($"Clearing the event session buffer. Counter: {hangFireCounter.Counter}, Limit: {hangFireCounter.Limit}.");
                 hangFireCounter.Counter = 0;
 
                 await _hangFireCounterRepository.UpdateHangFireCounter(hangFireCounter);
             }
+        }
+        public async Task RunSecondDemoTask()
+        {
+            Console.WriteLine("Analyzing requests for the last hour.");
         }
     }
 }

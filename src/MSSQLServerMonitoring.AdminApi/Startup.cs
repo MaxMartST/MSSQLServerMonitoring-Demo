@@ -17,6 +17,7 @@ using MSSQLServerMonitoring.Infrastructure.Procedure;
 using Hangfire;
 using MSSQLServerMonitoring.HangFire.HangFire;
 using MSSQLServerMonitoring.Infrastructure.Data.HangFireModel;
+using Hangfire.SqlServer;
 
 namespace MSSQLServerMonitoring.AdminApi
 {
@@ -33,7 +34,13 @@ namespace MSSQLServerMonitoring.AdminApi
 
         public IServiceProvider ConfigureServices( IServiceCollection services )
         {
-            AddServices( services );
+            AddServices(services);
+
+            JobStorage.Current = new SqlServerStorage(Configuration.GetConnectionString("ExampleConnection"));
+            var sp = services.BuildServiceProvider();
+            var hangFireService = sp.GetService<IHangFireService>();
+            RecurringJob.AddOrUpdate("demo-jod", () => hangFireService.RunDemoTask(), Cron.Minutely);
+            //RecurringJob.AddOrUpdate("demo-jod", () => hangFireService.RunSecondDemoTask(), "*/5 * * * * *");
 
             return services.BuildServiceProvider();
         }
@@ -59,7 +66,7 @@ namespace MSSQLServerMonitoring.AdminApi
                 } );
         }
 
-        public virtual void Configure( IApplicationBuilder app)
+        public virtual void Configure( IApplicationBuilder app )
         {
             app.UseMvcWithDefaultRoute();
             app.UseHangfireServer();

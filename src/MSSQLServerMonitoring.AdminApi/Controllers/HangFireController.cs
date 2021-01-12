@@ -20,7 +20,7 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            RecurringJob.AddOrUpdate("demo-jod", () => this._hangFireService.RunDemoTask(), Cron.Minutely);
+            //RecurringJob.AddOrUpdate("demo-jod", () => this._hangFireService.RunDemoTask(), Cron.Minutely);
 
             return Ok();
         }
