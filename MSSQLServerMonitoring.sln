@@ -29,9 +29,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.Appli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.IntegrationTests", "tests\MSSQLServerMonitoring.IntegrationTests\MSSQLServerMonitoring.IntegrationTests.csproj", "{63781739-490F-44A9-AE00-D8D0D0AC2E9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSSQLServerMonitoring.Connector", "src\MSSQLServerMonitoring.Connector\MSSQLServerMonitoring.Connector.csproj", "{954C4F36-905A-4AD1-B2C6-056F4306889B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.Connector", "src\MSSQLServerMonitoring.Connector\MSSQLServerMonitoring.Connector.csproj", "{954C4F36-905A-4AD1-B2C6-056F4306889B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSSQLServerMonitoring.Hangfire", "src\MSSQLServerMonitoring.Hangfire\MSSQLServerMonitoring.Hangfire.csproj", "{552BBC10-32C7-47BB-8ADD-AC79D8E72F59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.Hangfire", "src\MSSQLServerMonitoring.Hangfire\MSSQLServerMonitoring.Hangfire.csproj", "{552BBC10-32C7-47BB-8ADD-AC79D8E72F59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSSQLServerMonitoring.WebApp", "src\MSSQLServerMonitoringWebApp\MSSQLServerMonitoring.WebApp.csproj", "{EDAF97B0-3FB2-425B-9415-B4FA9935602B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,10 @@ Global
 		{552BBC10-32C7-47BB-8ADD-AC79D8E72F59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{552BBC10-32C7-47BB-8ADD-AC79D8E72F59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{552BBC10-32C7-47BB-8ADD-AC79D8E72F59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDAF97B0-3FB2-425B-9415-B4FA9935602B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDAF97B0-3FB2-425B-9415-B4FA9935602B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDAF97B0-3FB2-425B-9415-B4FA9935602B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDAF97B0-3FB2-425B-9415-B4FA9935602B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +100,7 @@ Global
 		{63781739-490F-44A9-AE00-D8D0D0AC2E9E} = {B0CEEDA1-8CF5-4146-B500-A75CAF8E4672}
 		{954C4F36-905A-4AD1-B2C6-056F4306889B} = {20C874BC-048D-48C7-A551-13F274A72CE8}
 		{552BBC10-32C7-47BB-8ADD-AC79D8E72F59} = {20C874BC-048D-48C7-A551-13F274A72CE8}
+		{EDAF97B0-3FB2-425B-9415-B4FA9935602B} = {20C874BC-048D-48C7-A551-13F274A72CE8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1ABBB87F-2046-4B49-843E-DFE39AF8C6FD}
