@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:64423",
-      "sslPort": 44333
+      "applicationUrl": "http://localhost:49643",
+      "sslPort": 44394
     }
   },
   "profiles": {
@@ -17,6 +17,10 @@
     },
     "MSSQLServerMonitoring.WebApp": {
       "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
       "applicationUrl": "http://localhost:6010"
     }
   }

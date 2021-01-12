@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MSSQLServerMonitoring.Infrastructure.Startup;
 
-namespace MSSQLServerMonitoring.WabApp
+namespace MSSQLServerMonitoring.WebApp
 {
     public class Startup : IBaseStartup
     {
@@ -18,6 +18,7 @@ namespace MSSQLServerMonitoring.WabApp
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             AddServices(services);
+
             return services.BuildServiceProvider();
         }
 
@@ -30,15 +31,17 @@ namespace MSSQLServerMonitoring.WabApp
         {
             app.UseDeveloperExceptionPageIfDev();
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();  // Добавляем маршрутизацию для Razor Pages
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

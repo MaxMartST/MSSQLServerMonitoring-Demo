@@ -1,6 +1,6 @@
-using MSSQLServerMonitoring.Infrastructure.Startup;
+﻿using MSSQLServerMonitoring.Infrastructure.Startup;
 
-namespace MSSQLServerMonitoring.WabApp
+namespace MSSQLServerMonitoring.WebApp
 {
     public class Program
     {
