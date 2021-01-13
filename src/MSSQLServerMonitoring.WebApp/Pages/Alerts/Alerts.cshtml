@@ -1,7 +1,96 @@
 ﻿@page
 @model MSSQLServerMonitoring.WebApp.Pages.Alerts.AlertsModel
 @{
+    ViewData["Title"] = "List alert";
 }
+<h2>@ViewData["Title"]</h2>
 
-<h1>Alersts</h1>
-<h3>@Model.Alerts.Count()</h3>
+<div class="text-center">
+    <form method="post">
+        Start Date : <input type="datetime" name="startdate" />
+        End Date : <input type="datetime" name="enddate" />
+        <input type="submit" value="Submit" class="btn btn-success"/>
+
+        <a asp-page="./Alerts">Get All alerts</a>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <a asp-page="./Alerts" asp-route-sortOrder="@Model.IdSort">
+                            @Html.DisplayNameFor(model => model.Alerts[0].Id)
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-page="./Alerts" asp-route-sortOrder="@Model.DateSort">
+                            @Html.DisplayNameFor(model => model.Alerts[0].TimeStamp)
+                        </a>
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Alerts[0].AttachActivityId)
+                    </th>
+                    <th>
+                        <a asp-page="./Alerts" asp-route-sortOrder="@Model.MessageSort">
+                            @Html.DisplayNameFor(model => model.Alerts[0].Message)
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-page="./Alerts" asp-route-sortOrder="@Model.StatusSort">
+                            @Html.DisplayNameFor(model => model.Alerts[0].Status)
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Alerts)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TimeStamp)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AttachActivityId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Message)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
+
+
+
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Date</th>
+            <th>Query-id</th>
+            <th>Message</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Alerts)
+        {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.TimeStamp</td>
+            <td>@item.AttachActivityId</td>
+            <td>@item.Message</td>
+            <td>@item.Status</td>
+        </tr>
+        }
+    </tbody>
+</table>*@

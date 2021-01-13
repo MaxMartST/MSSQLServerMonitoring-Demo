@@ -12,7 +12,7 @@ namespace MSSQLServerMonitoring.WebApp.Pages
         public string Message { get; set; }
         public void OnGet()
         {
-            Message = $"Welcom to our first Razor Page Application!\nThe time now is: {DateTime.Now.ToLongTimeString()}";
+            Message = $"Welcome to our MS SQL Server Monitoring";
         }
     }
 }

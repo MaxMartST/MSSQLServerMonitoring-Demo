@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,12 +45,18 @@ namespace MSSQLServerMonitoring.WebApp
                 .AddWrapper()
                 .AddMSSQLServerConnector(new ConfigureMSSQLServerConnectorComponent { BaseApiUrl = Configuration.GetConnectionString("MonitorConnection") })
                 .AddAdupter()
-                .AddEventBuffer();
-            services.AddControllers()
+                .AddEventBuffer()
+                .AddControllers()
                 .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
                     options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
+            services.Configure<RouteOptions>(options =>
+                {
+                    options.LowercaseUrls = true;
+                    options.LowercaseQueryStrings = true;
+                    options.AppendTrailingSlash = true;
                 });
         }
 
