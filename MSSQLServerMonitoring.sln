@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{20C874BC-048
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B0CEEDA1-8CF5-4146-B500-A75CAF8E4672}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.Admin", "src\MSSQLServerMonitoring.Admin\MSSQLServerMonitoring.Admin.csproj", "{CDC7FB65-98A5-4ACD-9228-1B351706832B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.AdminApi", "src\MSSQLServerMonitoring.AdminApi\MSSQLServerMonitoring.AdminApi.csproj", "{4FD05800-460E-4F4F-9228-ED9885765789}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.Application", "src\MSSQLServerMonitoring.Application\MSSQLServerMonitoring.Application.csproj", "{0C7A05E6-8093-4C63-8B67-43C5A9CF2F1E}"
@@ -33,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.Conne
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.Hangfire", "src\MSSQLServerMonitoring.Hangfire\MSSQLServerMonitoring.Hangfire.csproj", "{552BBC10-32C7-47BB-8ADD-AC79D8E72F59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSSQLServerMonitoring.WebApp", "src\MSSQLServerMonitoring.WebApp\MSSQLServerMonitoring.WebApp.csproj", "{AF798A8C-AF95-4DC0-8635-24996F484BE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQLServerMonitoring.WebApp", "src\MSSQLServerMonitoring.WebApp\MSSQLServerMonitoring.WebApp.csproj", "{AF798A8C-AF95-4DC0-8635-24996F484BE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +39,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CDC7FB65-98A5-4ACD-9228-1B351706832B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CDC7FB65-98A5-4ACD-9228-1B351706832B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CDC7FB65-98A5-4ACD-9228-1B351706832B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CDC7FB65-98A5-4ACD-9228-1B351706832B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4FD05800-460E-4F4F-9228-ED9885765789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4FD05800-460E-4F4F-9228-ED9885765789}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FD05800-460E-4F4F-9228-ED9885765789}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -90,7 +84,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{CDC7FB65-98A5-4ACD-9228-1B351706832B} = {20C874BC-048D-48C7-A551-13F274A72CE8}
 		{4FD05800-460E-4F4F-9228-ED9885765789} = {20C874BC-048D-48C7-A551-13F274A72CE8}
 		{0C7A05E6-8093-4C63-8B67-43C5A9CF2F1E} = {20C874BC-048D-48C7-A551-13F274A72CE8}
 		{4F7B6B52-EB98-4D75-9A7E-144BCFA36651} = {20C874BC-048D-48C7-A551-13F274A72CE8}

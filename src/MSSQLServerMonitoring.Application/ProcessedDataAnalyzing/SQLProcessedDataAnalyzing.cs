@@ -1,9 +1,9 @@
-﻿using MSSQLServerMonitoring.Domain.Model;
+﻿using MSSQLServerMonitoring.Domain.AlertModel;
+using MSSQLServerMonitoring.Domain.QueryModel;
 using MSSQLServerMonitoring.Infrastructure.Wrapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
 {

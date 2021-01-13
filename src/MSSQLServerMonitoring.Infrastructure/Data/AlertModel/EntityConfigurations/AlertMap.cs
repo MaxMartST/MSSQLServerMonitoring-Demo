@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MSSQLServerMonitoring.Domain.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MSSQLServerMonitoring.Domain.AlertModel;
 
-namespace MSSQLServerMonitoring.Infrastructure.Data.QueryModel.EntityConfigurations
+namespace MSSQLServerMonitoring.Infrastructure.Data.AlertModel.EntityConfigurations
 {
     public class AlertMap : IEntityTypeConfiguration<Alert>
     {

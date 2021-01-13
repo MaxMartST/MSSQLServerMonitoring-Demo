@@ -8,9 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MSSQLServerMonitoring.Domain.UserModel;
 using MSSQLServerMonitoring.Infrastructure.Data.UserModel.EntityConfigurations;
 using MSSQLServerMonitoring.Infrastructure.Data.QueryModel.EntityConfigurations;
+using MSSQLServerMonitoring.Infrastructure.Data.AlertModel.EntityConfigurations;
 using MSSQLServerMonitoring.Domain.Toolkit.Domain.Abstractions;
 using MSSQLServerMonitoring.Infrastructure.Clock;
-using MSSQLServerMonitoring.Domain.Model;
+using MSSQLServerMonitoring.Domain.QueryModel;
 
 namespace MSSQLServerMonitoring.Infrastructure.Data
 {

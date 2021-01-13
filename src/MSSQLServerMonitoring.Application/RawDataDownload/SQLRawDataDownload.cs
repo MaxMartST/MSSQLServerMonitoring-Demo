@@ -1,5 +1,5 @@
 ﻿using MSSQLServerMonitoring.Connector.Model;
-using MSSQLServerMonitoring.Domain.Model;
+using MSSQLServerMonitoring.Domain.QueryModel;
 using MSSQLServerMonitoring.Infrastructure.Wrapper;
 using System;
 using System.Collections.Generic;

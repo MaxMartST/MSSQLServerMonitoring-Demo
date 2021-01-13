@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MSSQLServerMonitoring.Application.RawDataDownload;
-using MSSQLServerMonitoring.Connector.Model;
-using MSSQLServerMonitoring.Domain.Model;
+using MSSQLServerMonitoring.Domain.QueryModel;
 using MSSQLServerMonitoring.Infrastructure.Wrapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MSSQLServerMonitoring.AdminApi.Controllers

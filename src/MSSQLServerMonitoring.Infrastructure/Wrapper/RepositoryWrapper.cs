@@ -1,9 +1,8 @@
-﻿using MSSQLServerMonitoring.Domain.Model;
+﻿using MSSQLServerMonitoring.Domain.AlertModel;
+using MSSQLServerMonitoring.Domain.QueryModel;
 using MSSQLServerMonitoring.Infrastructure.Data;
+using MSSQLServerMonitoring.Infrastructure.Data.AlertModel;
 using MSSQLServerMonitoring.Infrastructure.Data.QueryModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MSSQLServerMonitoring.Infrastructure.Wrapper
 {
@@ -36,7 +35,7 @@ namespace MSSQLServerMonitoring.Infrastructure.Wrapper
             {
                 if (_alert == null)
                 {
-                    //_alert = new AlertRepository(_ctx);
+                    _alert = new AlertRepository(_ctx);
                 }
 
                 return _alert;

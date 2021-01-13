@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -21,6 +21,9 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\MSSQLServerMonitoring.Application\MSSQLServerMonitoring.Application.csproj" />
+    <ProjectReference Include="..\MSSQLServerMonitoring.Domain\MSSQLServerMonitoring.Domain.csproj" />
+    <ProjectReference Include="..\MSSQLServerMonitoring.Hangfire\MSSQLServerMonitoring.Hangfire.csproj" />
     <ProjectReference Include="..\MSSQLServerMonitoring.Infrastructure\MSSQLServerMonitoring.Infrastructure.csproj" />
   </ItemGroup>
 

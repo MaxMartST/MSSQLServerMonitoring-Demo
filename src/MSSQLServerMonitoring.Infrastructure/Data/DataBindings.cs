@@ -1,9 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MSSQLServerMonitoring.Domain.Model;
 using MSSQLServerMonitoring.Domain.UserModel;
-using MSSQLServerMonitoring.Infrastructure.Data.QueryModel;
 using MSSQLServerMonitoring.Infrastructure.Data.UserModel;
 
 namespace MSSQLServerMonitoring.Infrastructure.Data

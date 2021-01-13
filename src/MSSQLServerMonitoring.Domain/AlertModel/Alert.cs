@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MSSQLServerMonitoring.Domain.Model
+namespace MSSQLServerMonitoring.Domain.AlertModel
 {
     public class Alert : Entity, IAggregateRoot
     {
         public DateTime TimeStamp { get; set; }
+        public AlertStatus? Status { get; set; }
         public string AttachActivityId { get; set; }
         public string SqlText { get; set; }
         public string Message { get; set; }

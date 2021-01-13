@@ -1,13 +1,12 @@
 ﻿using MSSQLServerMonitoring.Domain.Toolkit.Domain.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace MSSQLServerMonitoring.Domain.Model
+namespace MSSQLServerMonitoring.Domain.QueryModel
 {
     public class Query : Entity, IAggregateRoot
     {
         public DateTime TimeStamp { get; set; }
+        public QueryStatus? Status { get; set; }
         public string AttachActivityId { get; set; }
         public string EventName { get; set; }
         public string PackageName { get; set; }

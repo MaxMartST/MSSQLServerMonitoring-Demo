@@ -1,9 +1,8 @@
 ﻿using MSSQLServerMonitoring.Connector.Model;
-using MSSQLServerMonitoring.Domain.Model;
+using MSSQLServerMonitoring.Domain.QueryModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MSSQLServerMonitoring.Hangfire.Mappers
 {

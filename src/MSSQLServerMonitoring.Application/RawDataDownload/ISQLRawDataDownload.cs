@@ -1,4 +1,4 @@
-﻿using MSSQLServerMonitoring.Domain.Model;
+﻿using MSSQLServerMonitoring.Domain.QueryModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
