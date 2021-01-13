@@ -12,7 +12,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using MSSQLServerMonitoring.Connector;
 using MSSQLServerMonitoring.Hangfire;
-using Microsoft.AspNetCore.Http;
 using MSSQLServerMonitoring.Infrastructure.Procedure;
 using MSSQLServerMonitoring.Infrastructure.Wrapper;
 
