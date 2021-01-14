@@ -10,11 +10,13 @@
     Start Date : <input class="form-control col-3"
                         type="datetime-local"
                         data-val="true"
-                        name="StartDate">
+                        asp-for="StartDate"
+                        value="2021-01-23T06:42:55.806">
     End Date : <input class="form-control col-3"
                         type="datetime-local"
                         data-val="true"
-                        name="EndDate">
+                        asp-for="EndDate"
+                        value="2021-01-23T06:42:55.806">
 
     <input type="submit" value="Submit" class="btn btn-success mt-3" />
     <a asp-page="./Alerts">Get All alerts</a>
@@ -37,7 +39,7 @@
                     @Html.DisplayNameFor(model => model.Alerts[0].Message)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Alerts[0].Status)
+                    @Html.DisplayNameFor(model => model.Alerts[0].SqlText)
                 </th>
             </tr>
         </thead>
@@ -58,7 +60,7 @@
                     @Html.DisplayFor(modelItem => item.Message)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Status)
+                    @Html.DisplayFor(modelItem => item.SqlText)
                 </td>
 
             </tr>

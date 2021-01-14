@@ -16,16 +16,16 @@ namespace MSSQLServerMonitoring.WebApp.Pages.Alerts
         {
             _repositoryWrapper = repositoryWrapper;
         }
-        [BindProperty, DisplayFormat(DataFormatString = "{0:yyyy-MM-ddTHH:mm}", ApplyFormatInEditMode = true)]
+        [BindProperty(SupportsGet = true), DisplayFormat(DataFormatString = "{0:yyyy-MM-ddTHH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
-        [BindProperty, DisplayFormat(DataFormatString = "{0:yyyy-MM-ddTHH:mm}", ApplyFormatInEditMode = true)]
+        [BindProperty(SupportsGet = true), DisplayFormat(DataFormatString = "{0:yyyy-MM-ddTHH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
         [BindProperty(SupportsGet = true)]
         public List<Alert> Alerts { get; set; }
         public string IdSort { get; set; }
         public string DateSort { get; set; }
 
-        public void OnGet(string sortOrder)
+        public void OnGet()
         {
             Alerts = _repositoryWrapper.Alert.GetAll().Result;
         }
