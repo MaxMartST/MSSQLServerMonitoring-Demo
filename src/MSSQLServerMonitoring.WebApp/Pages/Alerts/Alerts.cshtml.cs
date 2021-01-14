@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MSSQLServerMonitoring.Domain.AlertModel;
 using MSSQLServerMonitoring.Infrastructure.Wrapper;
@@ -15,11 +16,21 @@ namespace MSSQLServerMonitoring.WebApp.Pages.Alerts
         {
             _repositoryWrapper = repositoryWrapper;
         }
+        [BindProperty, DisplayFormat(DataFormatString = "{0:yyyy-MM-ddTHH:mm}", ApplyFormatInEditMode = true)]
+        public DateTime StartDate { get; set; }
+        [BindProperty, DisplayFormat(DataFormatString = "{0:yyyy-MM-ddTHH:mm}", ApplyFormatInEditMode = true)]
+        public DateTime EndDate { get; set; }
+        [BindProperty(SupportsGet = true)]
         public List<Alert> Alerts { get; set; }
         public string IdSort { get; set; }
         public string DateSort { get; set; }
 
         public void OnGet(string sortOrder)
+        {
+            Alerts = _repositoryWrapper.Alert.GetAll().Result;
+        }
+
+        public void OnGetGroupAlerts(string sortOrder)
         {
             List<Alert> alerts = _repositoryWrapper.Alert.GetAll().Result;
 
@@ -40,9 +51,9 @@ namespace MSSQLServerMonitoring.WebApp.Pages.Alerts
             Alerts = alertsGroup.ToList();
         }
 
-        public void OnPost(DateTime startDate, DateTime endDate)
+        public void OnPost()
         {
-            Alerts = _repositoryWrapper.Alert.GetOnCondition(a => (a.TimeStamp <= startDate) && (a.TimeStamp >= endDate)).Result;
+            Alerts = _repositoryWrapper.Alert.GetOnCondition(a => (a.TimeStamp <= StartDate) && (a.TimeStamp >= EndDate)).Result;
         }
     }
 }

@@ -5,62 +5,68 @@
 }
 <h2>@ViewData["Title"]</h2>
 
-<div class="text-center">
-    <form method="post">
-        Start Date : <input type="datetime" name="startdate" />
-        End Date : <input type="datetime" name="enddate" />
-        <input type="submit" value="Submit" class="btn btn-success"/>
 
-        <a asp-page="./Alerts">Get All alerts</a>
+<form method="post">
+    Start Date : <input class="form-control col-3"
+                        type="datetime-local"
+                        data-val="true"
+                        name="StartDate">
+    End Date : <input class="form-control col-3"
+                        type="datetime-local"
+                        data-val="true"
+                        name="EndDate">
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Alerts[0].Id)
-                    </th>
-                    <th>
-                        <a asp-page="./Alerts" asp-route-sortOrder="@Model.DateSort">
-                            @Html.DisplayNameFor(model => model.Alerts[0].TimeStamp)
-                        </a>
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Alerts[0].AttachActivityId)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Alerts[0].Message)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Alerts[0].Status)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Alerts)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TimeStamp)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AttachActivityId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Message)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Status)
-                        </td>
+    <input type="submit" value="Submit" class="btn btn-success mt-3" />
+    <a asp-page="./Alerts">Get All alerts</a>
 
-                    </tr>
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Alerts[0].Id)
+                </th>
+                <th>
+                    <a asp-page-handler="GroupAlerts" asp-route-sortOrder="@Model.DateSort">
+                        @Html.DisplayNameFor(model => model.Alerts[0].TimeStamp)
+                    </a>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Alerts[0].AttachActivityId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Alerts[0].Message)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Alerts[0].Status)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Alerts)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeStamp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AttachActivityId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Message)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+
+            </tr>
                 }
-            </tbody>
-        </table>
-    </form>
-</div>
+        </tbody>
+    </table>
+</form>
+
 
 
 
