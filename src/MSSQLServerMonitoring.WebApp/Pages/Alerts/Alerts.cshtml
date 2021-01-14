@@ -17,9 +17,7 @@
             <thead>
                 <tr>
                     <th>
-                        <a asp-page="./Alerts" asp-route-sortOrder="@Model.IdSort">
-                            @Html.DisplayNameFor(model => model.Alerts[0].Id)
-                        </a>
+                        @Html.DisplayNameFor(model => model.Alerts[0].Id)
                     </th>
                     <th>
                         <a asp-page="./Alerts" asp-route-sortOrder="@Model.DateSort">
@@ -30,14 +28,10 @@
                         @Html.DisplayNameFor(model => model.Alerts[0].AttachActivityId)
                     </th>
                     <th>
-                        <a asp-page="./Alerts" asp-route-sortOrder="@Model.MessageSort">
-                            @Html.DisplayNameFor(model => model.Alerts[0].Message)
-                        </a>
+                        @Html.DisplayNameFor(model => model.Alerts[0].Message)
                     </th>
                     <th>
-                        <a asp-page="./Alerts" asp-route-sortOrder="@Model.StatusSort">
-                            @Html.DisplayNameFor(model => model.Alerts[0].Status)
-                        </a>
+                        @Html.DisplayNameFor(model => model.Alerts[0].Status)
                     </th>
                 </tr>
             </thead>
