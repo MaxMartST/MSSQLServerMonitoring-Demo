@@ -1,0 +1,21 @@
+﻿@page
+@model MSSQLServerMonitoring.WebApp.Pages.Alerts.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="text-left col-12">
+        <h4>Individual request ID: @Model.Alert.AttachActivityId</h4><hr/>
+    </div>
+    <div class="text-left col-12">
+        <h4>SQL - text:</h4>
+        <p>
+            @Model.Alert.SqlText
+        </p>
+    </div>
+    <div class="text-center col-12">
+        <a asp-page="Alerts" class="btn btn-success">Back</a>
+    </div>
+</div>

@@ -270,8 +270,11 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
         {
             Alert alert = new Alert(
                 query.SqlText,
-                message, 
-                query.AttachActivityId
+                message,
+                query.AttachActivityId,
+                query.Duration,
+                query.LogicalReads,
+                query.Writes
             );
             alert.RegDate = DateTime.Now;
 

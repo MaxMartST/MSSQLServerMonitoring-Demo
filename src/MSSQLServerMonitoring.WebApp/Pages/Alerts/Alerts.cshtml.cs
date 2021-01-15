@@ -11,7 +11,7 @@ namespace MSSQLServerMonitoring.WebApp.Pages.Alerts
 {
     public class AlertsModel : PageModel
     {
-        IRepositoryWrapper _repositoryWrapper;
+        private readonly IRepositoryWrapper _repositoryWrapper;
         public AlertsModel(IRepositoryWrapper repositoryWrapper)
         {
             _repositoryWrapper = repositoryWrapper;

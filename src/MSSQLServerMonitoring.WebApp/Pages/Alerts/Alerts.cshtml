@@ -1,7 +1,7 @@
 ﻿@page
 @model MSSQLServerMonitoring.WebApp.Pages.Alerts.AlertsModel
 @{
-    ViewData["Title"] = "List alert";
+    ViewData["Title"] = "List alerts";
 }
 <h2>@ViewData["Title"]</h2>
 
@@ -19,54 +19,73 @@
                         value="2021-01-23T06:42:55.806">
 
     <input type="submit" value="Submit" class="btn btn-success mt-3" />
-    <a asp-page="./Alerts">Get All alerts</a>
-
-    <table class="table mt-3">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Alerts[0].Id)
-                </th>
-                <th>
-                    <a asp-page-handler="GroupAlerts" asp-route-sortOrder="@Model.DateSort">
-                        @Html.DisplayNameFor(model => model.Alerts[0].TimeStamp)
-                    </a>
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Alerts[0].AttachActivityId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Alerts[0].Message)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Alerts[0].SqlText)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Alerts)
+    <a asp-page="./Alerts" class="btn btn-link mt-3">Get All alerts</a>
+    <div class="text-center">
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Alerts[0].Id)
+                    </th>
+                    <th>
+                        <a asp-page-handler="GroupAlerts" asp-route-sortOrder="@Model.DateSort">
+                            @Html.DisplayNameFor(model => model.Alerts[0].TimeStamp)
+                        </a>
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Alerts[0].AttachActivityId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Alerts[0].LogicalReads)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Alerts[0].Writes)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Alerts[0].Duration)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Alerts[0].Message)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+           @foreach (var item in Model.Alerts)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TimeStamp)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AttachActivityId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Message)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SqlText)
-                </td>
-
-            </tr>
-                }
-        </tbody>
-    </table>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeStamp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AttachActivityId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LogicalReads)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Writes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+                    <td>
+                        <a asp-page="/Alerts/Details" asp-route-Id="@item.Id" class="btn m-1 btn-outline-info">View</a>
+                    </td>
+                    <td>
+                        <a href="#" class="btn m-1 btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    
 </form>
 
 
