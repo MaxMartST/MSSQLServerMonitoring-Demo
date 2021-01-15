@@ -31,4 +31,9 @@
     <ProjectReference Include="..\MSSQLServerMonitoring.Infrastructure\MSSQLServerMonitoring.Infrastructure.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

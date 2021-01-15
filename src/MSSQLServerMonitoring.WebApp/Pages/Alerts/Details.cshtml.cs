@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MSSQLServerMonitoring.Domain.AlertModel;
 using MSSQLServerMonitoring.Infrastructure.Wrapper;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MSSQLServerMonitoring.WebApp.Pages.Alerts
@@ -14,9 +16,20 @@ namespace MSSQLServerMonitoring.WebApp.Pages.Alerts
         {
             _repositoryWrapper = repositoryWrapper;
         }
-        public void OnGet(int id)
+        public IActionResult OnGet(int id)
         {
-            Alert = _repositoryWrapper.Alert.GetOnCondition(a => a.Id == id).Result.First();
+            List<Alert> alerts = _repositoryWrapper.Alert.GetOnCondition(a => a.Id == id).Result;
+
+            if (alerts.Count == 0)
+            {
+                return RedirectToPage("/NotFound");
+            }
+            else
+            {
+                Alert = alerts.First();
+            }
+
+            return Page();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@page
+﻿@page 
 @model MSSQLServerMonitoring.WebApp.Pages.Alerts.AlertsModel
 @{
     ViewData["Title"] = "List alerts";
@@ -76,9 +76,6 @@
                     </td>
                     <td>
                         <a asp-page="/Alerts/Details" asp-route-Id="@item.Id" class="btn m-1 btn-outline-info">View</a>
-                    </td>
-                    <td>
-                        <a href="#" class="btn m-1 btn-outline-danger">Delete</a>
                     </td>
                 </tr>
             }

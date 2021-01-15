@@ -34,5 +34,9 @@ namespace MSSQLServerMonitoring.Domain.AlertModel
                 TimeStamp = value;
             }
         }
+
+        protected Alert()
+        { 
+        }
     }
 }
