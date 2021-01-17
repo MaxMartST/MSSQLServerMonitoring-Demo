@@ -6,7 +6,7 @@ namespace MSSQLServerMonitoring.Infrastructure.Migrations.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var sp = @"CREATE PROCEDURE GiveRequestsOnTime @timeToAsk datetime2 "
+            var procrdure = @"CREATE PROCEDURE GiveRequestsOnTime @timeToAsk datetime2 "
                 + "AS "
                 + "DECLARE @target_data XML "
                 + "SELECT  @target_data = CAST([t].[target_data] AS XML) "
@@ -31,16 +31,18 @@ namespace MSSQLServerMonitoring.Infrastructure.Migrations.Migrations
                 + "n.value(N'(data[@name=\"logical_reads\"]/value)[1]', N'bigint') AS [LogicalReads], "
                 + "n.value(N'(data[@name=\"writes\"]/value)[1]', N'bigint') AS [Writes], "
                 + "n.value(N'(data[@name=\"row_count\"]/value)[1]', N'bigint') AS [RowCount], "
-                + "REPLACE(n.value(N'(action[@name=\"sql_text\"]/value)[1]', N'nvarchar(max)'), CHAR(10), CHAR(13)+CHAR(10)) AS [SqlText] "
+                + "REPLACE(IIF((n.value(N'(action[@name=\"sql_text\"]/value)[1]', N'nvarchar(max)')) IS NULL, N'Not data',n.value(N'(action[@name=\"sql_text\"]/value)[1]', N'nvarchar(max)')), CHAR(10), CHAR(13)+CHAR(10)) AS [SqlText] "
                 + "FROM @target_data.nodes('RingBufferTarget/event') AS the (n) "
                 + "WHERE DATEADD(hh, DATEDIFF(hh, GETUTCDATE(), CURRENT_TIMESTAMP), n.value('(@timestamp)[1]', 'datetime2')) >= @timeToAsk ";
 
-            migrationBuilder.Sql(sp);
+            migrationBuilder.Sql(procrdure);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            var procrdure = "DROP PROCEDURE GiveRequestsOnTime";
 
+            migrationBuilder.Sql(procrdure);
         }
     }
 }

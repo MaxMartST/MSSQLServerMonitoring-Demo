@@ -33,7 +33,7 @@
                         </a>
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Alerts[0].AttachActivityId)
+                        @Html.DisplayNameFor(model => model.Alerts[0].QueryId)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Alerts[0].LogicalReads)
@@ -47,6 +47,9 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Alerts[0].Message)
                     </th>
+                    <th>
+                        Details
+                    </th>           
                 </tr>
             </thead>
             <tbody>
@@ -60,7 +63,7 @@
                         @Html.DisplayFor(modelItem => item.TimeStamp)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.AttachActivityId)
+                        @Html.DisplayFor(modelItem => item.QueryId)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.LogicalReads)

@@ -4,14 +4,16 @@ using MSSQLServerMonitoring.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MSSQLServerMonitoring.Infrastructure.Migrations.Migrations
 {
     [DbContext(typeof(ExampleContext))]
-    partial class ExampleContextModelSnapshot : ModelSnapshot
+    [Migration("20210117134542_AddStatementInAlertModel")]
+    partial class AddStatementInAlertModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,8 +31,6 @@ namespace MSSQLServerMonitoring.Infrastructure.Migrations.Migrations
 
                     b.Property<decimal>("Duration")
                         .HasColumnType("decimal(19, 4)");
-
-                    b.Property<string>("EventName");
 
                     b.Property<long>("LogicalReads");
 

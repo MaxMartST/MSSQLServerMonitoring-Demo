@@ -9,8 +9,8 @@ namespace MSSQLServerMonitoring.Domain
 {
     public interface IRepositoryBase<T>
     {
-        Task<List<T>> GetAll();
-        Task<List<T>> GetOnCondition(Expression<Func<T, bool>> expression);
+        Task <List<T>> GetAll();
+        Task <List<T>> GetOnCondition(Expression<Func<T, bool>> expression);
         Task Add(T entity);
         Task Update(T entity);
         Task Delete(T entity);

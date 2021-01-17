@@ -188,10 +188,6 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
 
         private Coefficient GetApprox(double[,] temp, long node)
         {
-            //double sumx = 0;
-            //double sumy = 0;
-            //double sumx2 = 0;
-            //double sumxy = 0;
             double sumTimeStamp = 0;// x
             double sumTimeStamp2 = 0;// x * x
             double sumLogicalReads = 0;// y
@@ -203,11 +199,6 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
 
             for (int i = 0; i < node; i++)
             {
-                //sumx += temp[0, i];
-                //sumx2 += temp[0, i] * temp[0, i];
-                //sumy += temp[1, i];
-                //sumxy += temp[0, i] * temp[1, i];
-
                 sumTimeStamp += temp[0, i];
                 sumTimeStamp2 += temp[0, i] * temp[0, i];
 
@@ -268,17 +259,19 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
 
         private void GenerateAlert(Query query, string message)
         {
-            Alert alert = new Alert(
-                query.SqlText,
-                message,
-                query.AttachActivityId,
-                query.Duration,
-                query.LogicalReads,
-                query.Writes
-            );
-            alert.RegDate = DateTime.Now;
+            Alert alert = new Alert { 
+                QueryId = query.AttachActivityId, 
+                EventName = query.EventName,
+                SqlText = query.SqlText,
+                Statement = query.Statement,
+                Duration = query.Duration,
+                LogicalReads = query.LogicalReads,
+                Writes = query.Writes,
+                Message = message,
+                RegDate = DateTime.Now
+            };
 
-            Console.WriteLine(alert.AttachActivityId);
+            Console.WriteLine(alert.QueryId);
             Console.WriteLine(alert.TimeStamp);
             Console.WriteLine(alert.SqlText);
             Console.WriteLine(alert.Message);

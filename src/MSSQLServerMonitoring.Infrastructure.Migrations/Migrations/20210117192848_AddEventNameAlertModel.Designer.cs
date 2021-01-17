@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MSSQLServerMonitoring.Infrastructure.Migrations.Migrations
 {
     [DbContext(typeof(ExampleContext))]
-    [Migration("20201231101602_AddProcGiveRequestsOnTime")]
-    partial class AddProcGiveRequestsOnTime
+    [Migration("20210117192848_AddEventNameAlertModel")]
+    partial class AddEventNameAlertModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,39 @@ namespace MSSQLServerMonitoring.Infrastructure.Migrations.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("Relational:Sequence:.EntityFrameworkHiLoSequence", "'EntityFrameworkHiLoSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("MSSQLServerMonitoring.Domain.AlertModel.Alert", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:HiLoSequenceName", "EntityFrameworkHiLoSequence")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
+
+                    b.Property<decimal>("Duration")
+                        .HasColumnType("decimal(19, 4)");
+
+                    b.Property<string>("EventName");
+
+                    b.Property<long>("LogicalReads");
+
+                    b.Property<string>("Message");
+
+                    b.Property<string>("QueryId");
+
+                    b.Property<DateTime>("RegDate");
+
+                    b.Property<string>("SqlText");
+
+                    b.Property<string>("Statement");
+
+                    b.Property<DateTime>("TimeStamp");
+
+                    b.Property<long>("Writes");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Alert");
+                });
 
             modelBuilder.Entity("MSSQLServerMonitoring.Domain.QueryModel.Query", b =>
                 {
