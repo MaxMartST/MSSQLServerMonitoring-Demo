@@ -14,6 +14,11 @@ using MSSQLServerMonitoring.Connector;
 using MSSQLServerMonitoring.Hangfire;
 using Microsoft.AspNetCore.Http;
 using MSSQLServerMonitoring.Infrastructure.Procedure;
+using Hangfire;
+using MSSQLServerMonitoring.HangFire.HangFire;
+using MSSQLServerMonitoring.Infrastructure.Data.HangFireModel;
+using Hangfire.SqlServer;
+using Hangfire.MemoryStorage;
 
 namespace MSSQLServerMonitoring.AdminApi
 {
@@ -30,24 +35,31 @@ namespace MSSQLServerMonitoring.AdminApi
 
         public IServiceProvider ConfigureServices( IServiceCollection services )
         {
-            AddServices( services );
+            AddServices(services);
+
+            JobStorage.Current = new SqlServerStorage(Configuration.GetConnectionString("ExampleConnection"));
+            var sp = services.BuildServiceProvider();
+            var hangFireService = sp.GetService<IHangFireService>();
+            RecurringJob.AddOrUpdate("demo-jod", () => hangFireService.RunDemoTask(), Cron.Minutely);
+            RecurringJob.AddOrUpdate("demo-jod-2", () => hangFireService.RunSecondDemoTask(), "*/5 * * * * *");
 
             return services.BuildServiceProvider();
         }
 
-        public virtual void AddServices( IServiceCollection services)
+        public virtual void AddServices( IServiceCollection services )
         {
             ConfigureDatabase( services );
+            ConfigureHangFire(services );
             services.AddFeatureManagement();
             services
                 .AddBaseServices()
                 .AddApplication()
                 .AddVersioning( 1, 0 )
-                //.AddMSSQLServerConnector(Configuration.GetSection("ConnectionStrings:ExampleConnection").Get<ConfigureMSSQLServerConnectorComponent>())
-                .AddMSSQLServerConnector(new ConfigureMSSQLServerConnectorComponent { BaseApiUrl = Configuration.GetConnectionString("MonitorConnection") })
+                
+                .AddMSSQLServerConnector( new ConfigureMSSQLServerConnectorComponent { BaseApiUrl = Configuration.GetConnectionString( "MonitorConnection" ) } )
                 .AddAdupter()
                 .AddEventBuffer()
-                .AddDefaultMvc("MSSQLServerMonitoring.AdminApi")
+                .AddDefaultMvc( "MSSQLServerMonitoring.AdminApi" )
                 .AddJsonOptions( options =>
                 {
                     options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
@@ -58,12 +70,26 @@ namespace MSSQLServerMonitoring.AdminApi
         public virtual void Configure( IApplicationBuilder app )
         {
             app.UseMvcWithDefaultRoute();
-
+            app.UseHangfireDashboard();
         }
 
         public virtual void ConfigureDatabase( IServiceCollection services )
         {
             services.AddDatabase<ExampleContext>( Configuration.GetConnectionString( "ExampleConnection" ) );
+        }
+        public virtual void ConfigureHangFire(IServiceCollection services)
+        {
+            //services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("ExampleConnection")));
+            //services.AddHangfireServer();
+            //services.AddScoped<IHangFireService, HangFireService>();
+            services.AddHangfire(config =>
+                  config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                        .UseSimpleAssemblyNameTypeSerializer()
+                        .UseDefaultTypeSerializer()
+                        .UseSqlServerStorage(Configuration.GetConnectionString("HangFire")));
+
+            services.AddHangfireServer();
+            services.AddScoped<IHangFireService, HangFireService>();
         }
     }
 }

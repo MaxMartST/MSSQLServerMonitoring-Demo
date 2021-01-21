@@ -6,11 +6,15 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MSSQLServerMonitoring.Application\MSSQLServerMonitoring.Application.csproj" />
     <ProjectReference Include="..\MSSQLServerMonitoring.Connector\MSSQLServerMonitoring.Connector.csproj" />
+    <ProjectReference Include="..\MSSQLServerMonitoring.Infrastructure\MSSQLServerMonitoring.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
