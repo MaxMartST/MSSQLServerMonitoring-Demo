@@ -12,13 +12,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using MSSQLServerMonitoring.Connector;
 using MSSQLServerMonitoring.Hangfire;
-using Microsoft.AspNetCore.Http;
 using MSSQLServerMonitoring.Infrastructure.Procedure;
 using Hangfire;
 using MSSQLServerMonitoring.HangFire.HangFire;
-using MSSQLServerMonitoring.Infrastructure.Data.HangFireModel;
 using Hangfire.SqlServer;
-using Hangfire.MemoryStorage;
 
 namespace MSSQLServerMonitoring.AdminApi
 {
@@ -79,9 +76,6 @@ namespace MSSQLServerMonitoring.AdminApi
         }
         public virtual void ConfigureHangFire(IServiceCollection services)
         {
-            //services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("ExampleConnection")));
-            //services.AddHangfireServer();
-            //services.AddScoped<IHangFireService, HangFireService>();
             services.AddHangfire(config =>
                   config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                         .UseSimpleAssemblyNameTypeSerializer()
