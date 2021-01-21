@@ -18,6 +18,7 @@ using Hangfire;
 using MSSQLServerMonitoring.HangFire.HangFire;
 using MSSQLServerMonitoring.Infrastructure.Data.HangFireModel;
 using Hangfire.SqlServer;
+using Hangfire.MemoryStorage;
 
 namespace MSSQLServerMonitoring.AdminApi
 {
@@ -69,7 +70,7 @@ namespace MSSQLServerMonitoring.AdminApi
         public virtual void Configure( IApplicationBuilder app )
         {
             app.UseMvcWithDefaultRoute();
-            app.UseHangfireServer();
+            app.UseHangfireDashboard();
         }
 
         public virtual void ConfigureDatabase( IServiceCollection services )
@@ -78,7 +79,15 @@ namespace MSSQLServerMonitoring.AdminApi
         }
         public virtual void ConfigureHangFire(IServiceCollection services)
         {
-            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("ExampleConnection")));
+            //services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("ExampleConnection")));
+            //services.AddHangfireServer();
+            //services.AddScoped<IHangFireService, HangFireService>();
+            services.AddHangfire(config =>
+                  config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                        .UseSimpleAssemblyNameTypeSerializer()
+                        .UseDefaultTypeSerializer()
+                        .UseSqlServerStorage(Configuration.GetConnectionString("HangFire")));
+
             services.AddHangfireServer();
             services.AddScoped<IHangFireService, HangFireService>();
         }
