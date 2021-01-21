@@ -41,7 +41,7 @@ namespace MSSQLServerMonitoring.AdminApi
             var sp = services.BuildServiceProvider();
             var hangFireService = sp.GetService<IHangFireService>();
             RecurringJob.AddOrUpdate("demo-jod", () => hangFireService.RunDemoTask(), Cron.Minutely);
-            //RecurringJob.AddOrUpdate("demo-jod", () => hangFireService.RunSecondDemoTask(), "*/5 * * * * *");
+            RecurringJob.AddOrUpdate("demo-jod-2", () => hangFireService.RunSecondDemoTask(), "*/5 * * * * *");
 
             return services.BuildServiceProvider();
         }
