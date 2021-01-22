@@ -40,8 +40,8 @@ namespace MSSQLServerMonitoring.AdminApi
             JobStorage.Current = new SqlServerStorage(Configuration.GetConnectionString("ExampleConnection"));
             var sp = services.BuildServiceProvider();
             var hangFireService = sp.GetService<IHangFireService>();
-            RecurringJob.AddOrUpdate("demo-jod", () => hangFireService.RunDemoTask(), Cron.Minutely);
-            //RecurringJob.AddOrUpdate("demo-jod", () => hangFireService.RunSecondDemoTask(), "*/5 * * * * *");
+            RecurringJob.AddOrUpdate("SavingOrClearingDataJob", () => hangFireService.SavingDataOrClearingBuffer(), Cron.Minutely);
+            RecurringJob.AddOrUpdate("AnalysisDataJobs", () => hangFireService.DataAnalysis(), "*/5 * * * * *");
 
             return services.BuildServiceProvider();
         }

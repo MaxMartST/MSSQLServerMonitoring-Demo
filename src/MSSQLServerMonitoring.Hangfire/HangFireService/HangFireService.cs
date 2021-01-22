@@ -19,7 +19,7 @@ namespace MSSQLServerMonitoring.HangFire.HangFire
             _eventBufferRepository = eventBufferRepository;
             _hangFireCounterRepository = hangFireCounterRepository;
         }
-        public async Task RunDemoTask()
+        public async Task SavingDataOrClearingBuffer()
         {
             HangFireCounter hangFireCounter = await _hangFireCounterRepository.GetHangFireCounter();
 
@@ -40,7 +40,7 @@ namespace MSSQLServerMonitoring.HangFire.HangFire
                 await _hangFireCounterRepository.UpdateHangFireCounter(hangFireCounter);
             }
         }
-        public async Task RunSecondDemoTask()
+        public async Task DataAnalysis()
         {
             Console.WriteLine("Analyzing requests for the last hour.");
         }

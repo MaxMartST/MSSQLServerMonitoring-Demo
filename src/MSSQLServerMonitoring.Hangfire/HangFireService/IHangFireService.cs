@@ -7,7 +7,7 @@ namespace MSSQLServerMonitoring.HangFire.HangFire
 {
     public interface IHangFireService
     {
-        Task RunDemoTask();
-        Task RunSecondDemoTask();
+        Task SavingDataOrClearingBuffer();
+        Task DataAnalysis();
     }
 }
