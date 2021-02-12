@@ -51,21 +51,14 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
         }
         public List<Query> AnalyzeQueries()
         {
-            // Получить запросы из БД за час, сгруппировать эти запросы по sql-text
-            //DateTime regDate = DateTime.Now;
-            //regDate = regDate.AddHours(-1);// получить время час назад
-
-            //DateTime yesterdayDate = new DateTime(2021, 1, 8, 17, 0, 0);//вчерашняя дата
-            //List<Query> yesterdayListQueries = _repositoryWrapper.Query.GetOnCondition(q => q.TimeStamp >= yesterdayDate).Result;
-            //var yesterdayGroupsQueries = yesterdayListQueries.GroupBy(q => q.SqlText);
-
-            DateTime todayDate = new DateTime(2021, 1, 9, 17, 0, 0);//сегодняшняя дата, минус 1 час
+            DateTime todayDate = DateTime.Now;
+            todayDate = todayDate.AddHours(-1);// получить время час назад
             List<Query> todayListQueries = _repositoryWrapper.Query.GetOnCondition(q => q.TimeStamp >= todayDate).Result;//запросы сделаные 1 час назад
             var todayGroupsQueries = todayListQueries.GroupBy(q => q.SqlText);//сгруппирированные запросы по sql-text
 
             foreach (IGrouping<string, Query> group in todayGroupsQueries)
             {
-                //ArithmeticMeanAnalysis(group);
+                ArithmeticMeanAnalysis(group);
                 MethodLeastSquares(group, todayDate);
             }
             
@@ -74,7 +67,6 @@ namespace MSSQLServerMonitoring.Application.ProcessedDataAnalyzing
 
         private void ArithmeticMeanAnalysis(IGrouping<string, Query> queries)
         {
-            // Анализируем полученные запросы на среднее - Анализ среднего по
             long AverageLogicalReads = 0, AverageWrites = 0, count = queries.Count();
             decimal AverageDuration = 0;
 

@@ -1,3 +1,4 @@
+using MSSQLServerMonitoring.Infrastructure.Wrapper;
 using NUnit.Framework;
 
 namespace MSSQLServerMonitoring.Application.UnitTests
@@ -15,7 +16,9 @@ namespace MSSQLServerMonitoring.Application.UnitTests
             var result = calculator.Add( 1, 2 );
 
             // Assert
-            Assert.That( result, Is.EqualTo( 3 ) );
+            //Assert.That( result, Is.EqualTo( 3 ) );
+            Assert.AreEqual(3, result);
         }
+
     }
 }

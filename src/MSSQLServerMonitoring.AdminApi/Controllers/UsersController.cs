@@ -7,9 +7,9 @@ using MSSQLServerMonitoring.Domain.UserModel;
 
 namespace MSSQLServerMonitoring.AdminApi.Controllers
 {
-    [ApiVersion( "1.0" )]
-    [Route( "v{version:apiVersion}/users" )]
-    [Produces( "application/json" )]
+    [ApiVersion("1.0")]
+    [Route("v{version:apiVersion}/users")]
+    [Produces("application/json")]
     public class UsersController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -27,8 +27,15 @@ namespace MSSQLServerMonitoring.AdminApi.Controllers
         }
 
         [HttpPost]
-        public async Task AddUser(User user)
+        //public async Task AddUser(User user)
+        //{
+        //   await _userRepository.AddUser(user);
+        //}
+
+        public async Task AddUser(UserDto userDto)
         {
+            var user = new User(userDto.Username);
+
             await _userRepository.AddUser(user);
         }
     }
